@@ -1,5 +1,10 @@
+import Layout from '../../common/layout/Layout';
 import './Contact.scss';
 
 export default function Contact() {
-	return <div className='Contact'>Contact</div>;
+	return (
+		<Layout>
+			<p>Contact contents</p>
+		</Layout>
+	);
 }

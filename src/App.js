@@ -7,21 +7,32 @@ import Department from './components/sub/department/Department';
 import Gallery from './components/sub/gallery/Gallery';
 import Members from './components/sub/members/Members';
 import Youtube from './components/sub/youtube/Youtube';
+import { Route } from 'react-router-dom';
 
 function App() {
 	return (
 		<>
 			<Header />
-			<MainWrap />
-			<Department />
-			<Youtube />
-			<Gallery />
-			<Community />
-			<Members />
-			<Contact />
+			<Route path='/' component={MainWrap} />
+			<Route path='/department' component={Department} />
+			<Route path='/youtube' component={Youtube} />
+			<Route path='/gallery' component={Gallery} />
+			<Route path='/community' component={Community} />
+			<Route path='/members' component={Members} />
+			<Route path='/contact' component={Contact} />
+			<Route path='/youtube' component={Youtube} />
+
 			<Footer />
 		</>
 	);
 }
 
 export default App;
+
+/*
+<Route pass='/'>
+	<MainWrap />
+</Route>
+<Route path='/mainWrap' component={MainWrap} />
+
+*/

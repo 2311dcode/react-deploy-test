@@ -43,3 +43,7 @@ export default function Header() {
 		</header>
 	);
 }
+
+/*
+Link , NavLink 차이 activeClassName 속성 추가가능유무 
+*/

@@ -20,7 +20,6 @@ function App() {
 			<Route path='/community' component={Community} />
 			<Route path='/members' component={Members} />
 			<Route path='/contact' component={Contact} />
-			<Route path='/youtube' component={Youtube} />
 
 			<Footer />
 		</>

@@ -1,7 +1,17 @@
 export function useSplitText() {
 	//해당 useSplitText훅은 호출시 아래의 함수를 리턴
-	return (txt) => {
-		console.log(txt);
+	return (ref, txt) => {
+		//console.log(txt);
+
+		let tags = '';
+		for (let letter of txt) {
+			tags += `
+        <span>${letter}</span>
+      `;
+		}
+
+		console.log(tags);
+		ref.innerHTML = tags;
 	};
 }
 

@@ -3,7 +3,7 @@ import './Contact.scss';
 
 export default function Contact() {
 	return (
-		<Layout>
+		<Layout title={'Contact'}>
 			<p>Contact contents</p>
 		</Layout>
 	);

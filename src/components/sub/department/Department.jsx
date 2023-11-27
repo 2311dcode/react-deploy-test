@@ -3,14 +3,22 @@ import Layout from '../../common/layout/Layout';
 import './Department.scss';
 
 export default function Department() {
+	const [MemberTit, setMemberTit] = useState('');
+
 	const [MemberData, setMemberData] = useState([]);
 	const path = process.env.PUBLIC_URL;
 	//public폴더까지의 절대경로
+
 	const fetchDepartment = () => {
 		fetch(`${path}/DB/department.json`)
 			.then((data) => data.json())
 			.then((json) => {
+				console.log(json);
+				console.log('key', Object.keys(json)[0]);
+				console.log('values', Object.values(json)[0]);
+
 				console.log(json.members);
+				setMemberTit(Object.keys(json)[0]);
 				setMemberData(json.members);
 			});
 	};
@@ -21,17 +29,20 @@ export default function Department() {
 
 	return (
 		<Layout title={'Department'}>
-			{MemberData.map((member, idx) => {
-				return (
-					<article key={member + idx}>
-						<div className='pic'>
-							<img src={`${path}/img/${member.pic}`} alt={member.name} />
-						</div>
-						<h2>{member.name}</h2>
-						<p>{member.position}</p>
-					</article>
-				);
-			})}
+			<section className='memberBox'>
+				<h2>{MemberTit}</h2>
+				{MemberData.map((member, idx) => {
+					return (
+						<article key={member + idx}>
+							<div className='pic'>
+								<img src={`${path}/img/${member.pic}`} alt={member.name} />
+							</div>
+							<h2>{member.name}</h2>
+							<p>{member.position}</p>
+						</article>
+					);
+				})}
+			</section>
 		</Layout>
 	);
 }
@@ -66,4 +77,12 @@ react에서 외부데이터를 가져와서 호면에 동적으로 출력하는 
 					</div>
 				);
 			})}
+
+객체의 property에서 key,value값 반복도는 방법 
+const student ={name:'David', age:20}
+//key반복돌면서 배열반환
+Object.keys(student);['name','age']
+Object.values(student); ['David',20]			
+
+특정문자에서 첫 단어만 대문자로 변경 
 */

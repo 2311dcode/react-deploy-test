@@ -19,4 +19,6 @@ a {
 	color: var(--baseColor);
 	font-family: var(--baseFont);
 	background-color: var(--bgColor);
+	font-size: var(--bodySize);
+	transition: color 1s, background-color 1s;
 }

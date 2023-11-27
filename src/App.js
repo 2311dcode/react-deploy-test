@@ -17,7 +17,7 @@ function App() {
 
 	return (
 		<div className={Dark ? 'wrap dark' : 'wrap'}>
-			<Header />
+			<Header Dark={Dark} setDark={setDark} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/youtube' component={Youtube} />

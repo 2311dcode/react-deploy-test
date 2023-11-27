@@ -15,7 +15,7 @@ function App() {
 	return (
 		<>
 			<Header />
-			<Route path='/' component={MainWrap} />
+			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/gallery' component={Gallery} />

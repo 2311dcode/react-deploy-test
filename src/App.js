@@ -10,10 +10,13 @@ import Youtube from './components/sub/youtube/Youtube';
 import { Route } from 'react-router-dom';
 import './globalStyles/Variables.scss';
 import './globalStyles/Reset.scss';
+import { useState } from 'react';
 
 function App() {
+	const [Dark, setDark] = useState(false);
+
 	return (
-		<>
+		<div className={Dark ? 'wrap dark' : 'wrap'}>
 			<Header />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
@@ -24,7 +27,7 @@ function App() {
 			<Route path='/contact' component={Contact} />
 
 			<Footer />
-		</>
+		</div>
 	);
 }
 

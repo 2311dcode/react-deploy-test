@@ -10,8 +10,11 @@ export default function Layout({ children, title }) {
 	useEffect(() => {
 		//아래처럼 custom훅이 반환한 함수를
 		//hook이나 핸들러 함수 내부에서 사용가능
-		splitText(refTitle.current, title);
-		refFrame.current.classList.add('on');
+		splitText(refTitle.current, title, 0.5, 0.1);
+		//on이 바로붙어버리고 페이지가 열려서 모션기능위해 setTimeout으로 지연시간 줌
+		setTimeout(() => {
+			refFrame.current.classList.add('on');
+		}, 300);
 	}, []);
 
 	return (

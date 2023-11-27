@@ -3,10 +3,17 @@
 :root {
 	--baseFont: 'Nanum Myeongjo', 'arial', '돋음'; //영문먼저 한글 시스템폰트 순
 	--pointFont: 'orbitron', 'arial';
-	--baseColor: 18, 18, 18;
+	--baseColor: #111;
+	--baseColor-code: 18, 18, 18;
 	--pointColor: hotpink;
 	--bgColor: 240, 240, 240;
 	--titSize1: 2.4rem;
 	--titSize2: 1.6rem;
 	--bodySize: 1rem;
+}
+
+.dark {
+	--baseColor: #fff;
+	--baseColor-code: 255, 255, 255;
+	--bgColor: #222;
 }

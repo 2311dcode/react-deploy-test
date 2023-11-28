@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Department.scss';
 
@@ -11,11 +11,14 @@ export default function Department() {
 	const [MemberTit, setMemberTit] = useState('');
 
 	const [MemberData, setMemberData] = useState([]);
-	const path = process.env.PUBLIC_URL;
+
+	const path = useRef(process.env.PUBLIC_URL);
+
+	// const path = process.env.PUBLIC_URL;
 	//public폴더까지의 절대경로
 
 	const fetchDepartment = () => {
-		fetch(`${path}/DB/department.json`)
+		fetch(`${path.current}/DB/department.json`)
 			.then((data) => data.json())
 			.then((json) => {
 				console.log(json);
@@ -54,7 +57,7 @@ export default function Department() {
 
 /*
 react에서 외부데이터를 가져와서 호면에 동적으로 출력하는 순서 
-1.외부 가져와서 담을 빈 state추가 (보통 빈배열로 초기화)
+1.외부 가져와서 담을 빈 state추가 (보통 빈배열로 초기화) - 1번만 호출
 
 2.fetch문을 이용해서 특정 url의 데이터를 가져온뒤 동기적으로 배열로 뽑은 뒤 state에 담아주는 함수 정의 
 
@@ -98,6 +101,10 @@ Object.values(student); ['David',20]
 전체문자열.lowerCase() :문자열을 전체 소문자로 반환 
 전체문자열.split(구분자) : 전체문자열을 구분자를 기준으로 나눠서 배열로 반환 
 배열.join('구분자') : 각 배열값을 구분자로 이어붙이면서 하나의 문자열로 반환 
+
+
+중요 정보제공, 출력 state 
+함수, 모션 반복 - 참조 ref 
 
 //
 */

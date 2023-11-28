@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Department.scss';
+import { UseCustomText } from '../../../hooks/useText';
 
 export default function Department() {
+	const changeTitle = UseCustomText('title');
 	const test = 'abcde';
 	console.log(test.charAt(0)); //a
 	console.log(test.slice(1, 3)); //bc
@@ -38,12 +40,12 @@ export default function Department() {
 	return (
 		<Layout title={'Department'}>
 			<section className='memberBox'>
-				<h2>{`${MemberTit.charAt(0).toUpperCase() + MemberTit.slice(1)}`}</h2>
+				<h2>{changeTitle(MemberTit)}</h2>
 				{MemberData.map((member, idx) => {
 					return (
 						<article key={member + idx}>
 							<div className='pic'>
-								<img src={`${path}/img/${member.pic}`} alt={member.name} />
+								<img src={`${path.current}/img/${member.pic}`} alt={member.name} />
 							</div>
 							<h2>{member.name}</h2>
 							<p>{member.position}</p>

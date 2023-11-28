@@ -16,7 +16,19 @@ export function useSplitText() {
 	};
 }
 
+export function UseCustomText(type) {
+	if (type === 'title') {
+		return (txt) => {
+			return txt.charAt(0).toUpperCase() + txt.slice(1);
+		};
+	}
+}
+
 /*
+
+
+
+
 use로 시작하는 커스텀 훅 함수는 컴포넌트단에서 호출가능
 컴포넌트 안쪽의 또다른 hook이나 일반 핸들러 함수 안쪽에서는 호출 불가능 
 해결방법 : 커스텀훅이 특정기능을 수행해주는 또다른 함수를 내부적으로 생성한 다음에 해당함수를 리턴

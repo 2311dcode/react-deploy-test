@@ -1,33 +1,52 @@
 export function useSplitText() {
-	//해당 useSplitText훅은 호출시 아래의 함수를 리턴
 	return (ref, txt, speed = 0, interval = 0) => {
-		//console.log(txt);
-
 		let tags = '';
 		let count = 0;
+
 		for (let letter of txt) {
 			tags += `
-        <span style='display: inline-block; transition-duration:${speed}s; transition-delay:${interval * count}s'>${letter}</span>
+        <span style='transition-duration:${speed}s;transition-delay:${interval * count}s; display:inline-block;'>${letter}</span>
       `;
 			count++;
 		}
-
 		ref.innerHTML = tags;
 	};
 }
 
-export function UseCustomText(type) {
-	if (type === 'title') {
+export function useCustomText(type) {
+	const toUpperText = (txt) => {
+		return txt.charAt(0).toUpperCase() + txt.slice(1);
+	};
+
+	if (type === 'shorten') {
+		return (txt, len = 100) => {
+			if (txt.length > len) {
+				return txt.slice(0, len) + '...';
+			} else {
+				return txt;
+			}
+		};
+	}
+	if (type === 'combined') {
 		return (txt) => {
-			return txt.charAt(0).toUpperCase() + txt.slice(1);
+			const resultText = txt
+				.split(/-|_|\+/)
+				.map((data) => toUpperText(data))
+				.join(' ');
+			return resultText;
 		};
 	}
 }
 
 /*
+str.replace(/^[a-z]/, char => char.toUpperCase())
+data.charAt(0).toUpperCase() + data.slice(1))
 
-
-
+	.split(/-|_|\+/)
+	정규표현식 
+	regEx regular expression 
+	문자열의 패턴별로 특정 기능 수행식 
+	-,_,+ 일때 해당 구분자로 문자분리 (예약어 앞에는 \ 붙여서 처리 )
 
 use로 시작하는 커스텀 훅 함수는 컴포넌트단에서 호출가능
 컴포넌트 안쪽의 또다른 hook이나 일반 핸들러 함수 안쪽에서는 호출 불가능 

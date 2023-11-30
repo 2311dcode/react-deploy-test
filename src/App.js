@@ -31,7 +31,7 @@ function App() {
 			<Route path='/contact' component={Contact} />
 
 			<Footer />
-			{Toggle && <Menu />}
+			{Toggle && <Menu setToggle={setToggle} />}
 		</div>
 	);
 }

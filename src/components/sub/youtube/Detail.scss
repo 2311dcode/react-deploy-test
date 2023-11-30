@@ -1,0 +1,18 @@
+.Detail {
+	h3 {
+		font-size: var(--titSize1);
+		font-family: var(--pointFont);
+		color: var(--baseColor);
+		margin-bottom: 50px;
+	}
+	.videoBox {
+		width: 100%;
+		height: 70vh;
+
+		iframe {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+}

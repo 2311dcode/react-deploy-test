@@ -7,6 +7,8 @@ import Department from './components/sub/department/Department';
 import Gallery from './components/sub/gallery/Gallery';
 import Members from './components/sub/members/Members';
 import Youtube from './components/sub/youtube/Youtube';
+import Detail from './components/sub/youtube/Detail';
+
 import { Route } from 'react-router-dom';
 import './globalStyles/Variables.scss';
 import './globalStyles/Reset.scss';
@@ -24,11 +26,12 @@ function App() {
 			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
-			<Route path='/youtube' component={Youtube} />
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/community' component={Community} />
 			<Route path='/members' component={Members} />
 			<Route path='/contact' component={Contact} />
+			<Route path='/youtube' component={Youtube} />
+			<Route path='/detail/:id' component={Detail} />
 
 			<Footer />
 			{Toggle && <Menu setToggle={setToggle} />}

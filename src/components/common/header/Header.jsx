@@ -41,7 +41,6 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 				</li>
 			</ul>
 
-			{/* <button onClick={() => setDark(!Dark)}>Theme</button> */}
 			<div className={`themeBox ${Dark && 'dark'}`} onClick={() => setDark(!Dark)}>
 				<div className='ball'></div>
 			</div>
@@ -52,7 +51,3 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 		</header>
 	);
 }
-
-/*
-Link , NavLink 차이 activeClassName 속성 추가가능유무 
-*/

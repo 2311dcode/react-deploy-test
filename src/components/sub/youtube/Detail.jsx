@@ -29,10 +29,7 @@ export default function Detail() {
 			{YoutubeData && (
 				<article>
 					<div className='videoBox'>
-						<iframe
-							src={`https://www.youtube.com/embed/${YoutubeData.resourceId.videoId}`}
-							title={YoutubeData.title}
-						></iframe>
+						<iframe src={`https://www.youtube.com/embed/${YoutubeData.resourceId.videoId}`} title={YoutubeData.title}></iframe>
 					</div>
 					<h3>{YoutubeData.title}</h3>
 					<p>{YoutubeData.description}</p>

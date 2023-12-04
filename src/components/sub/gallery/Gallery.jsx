@@ -5,9 +5,28 @@ import './Gallery.scss';
 
 export default function Gallery() {
 	console.log('re-render');
-	//1-참조객체에 내 아이디값 등록
 	const myID = useRef('187597869@N08');
+	const refNav = useRef(null);
+
 	const [Pics, setPics] = useState([]);
+
+	const activateBtn = (e) => {
+		const btns = refNav.current.querySelectorAll('button');
+		btns.forEach((btn) => btn.classList.remove('on'));
+		e.target.classList.add('on');
+	};
+
+	const handleInterest = (e) => {
+		if (e.target.classList.contains('on')) return;
+		activateBtn(e);
+		fetchFlickr({ type: 'interest' });
+	};
+
+	const handleMine = (e) => {
+		if (e.target.classList.contains('on')) return;
+		activateBtn(e);
+		fetchFlickr({ type: 'user', id: myID.current });
+	};
 
 	const fetchFlickr = async (opt) => {
 		const num = 50;
@@ -17,10 +36,8 @@ export default function Gallery() {
 		const method_interest = 'flickr.interestingness.getList';
 		const method_user = 'flickr.people.getPhotos';
 		const interestURL = `${baseURL}${method_interest}`;
-		//3- userURL에는 user_id를 상수값이 아닌 호출시점에 전달된 opt객체의 id로 등록해서 URL생성
 		const userURL = `${baseURL}${method_user}&user_id=${opt.id}`;
 		let url = '';
-		//4- 만들어진 URL로 데이터요청
 		opt.type === 'user' && (url = userURL);
 		opt.type === 'interest' && (url = interestURL);
 		const data = await fetch(url);
@@ -29,16 +46,17 @@ export default function Gallery() {
 	};
 
 	useEffect(() => {
-		//2-처음 컴포넌트 마운트시 타입을 user로 지정하고 id값으로 내 아이디등록
 		fetchFlickr({ type: 'user', id: myID.current });
 	}, []);
 
 	return (
 		<Layout title={'Gallery'}>
 			<article className='controls'>
-				<nav className='btnSet'>
-					<button onClick={() => fetchFlickr({ type: 'interest' })}>Interest Gallery</button>
-					<button onClick={() => fetchFlickr({ type: 'user', id: myID.current })}>My Gallery</button>
+				<nav className='btnSet' ref={refNav}>
+					<button onClick={handleInterest}>Interest Gallery</button>
+					<button className='on' onClick={handleMine}>
+						My Gallery
+					</button>
 				</nav>
 			</article>
 
@@ -61,7 +79,7 @@ export default function Gallery() {
 										alt='사용자 프로필 이미지'
 										onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
 									/>
-									<span>{pic.owner}</span>
+									<span onClick={() => fetchFlickr({ type: 'user', id: pic.owner })}>{pic.owner}</span>
 								</div>
 							</article>
 						);

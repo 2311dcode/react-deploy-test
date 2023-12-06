@@ -11,6 +11,9 @@ export default function Gallery() {
 	//isUser의 초기값을 내 아이디 문자값으로 등록
 	const isUser = useRef(myID.current);
 	const refNav = useRef(null);
+	const refFrameWrap = useRef(null);
+	const gap = useRef(20);
+
 	const [Pics, setPics] = useState([]);
 	const [Open, setOpen] = useState(false);
 	const activateBtn = (e) => {
@@ -108,8 +111,8 @@ export default function Gallery() {
 					</form>
 				</article>
 
-				<section>
-					<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
+				<section className='frameWrap' ref={refFrameWrap}>
+					<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: gap.current }}>
 						{Pics.length === 0 ? (
 							<h2>해당검색어의 결과값이 없습니다</h2>
 						) : (

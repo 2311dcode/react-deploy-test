@@ -90,6 +90,7 @@ export default function Gallery() {
 	useEffect(() => {
 		// fetchFlickr({ type: 'user', id: myID.current });
 		// fetchFlickr({ type: 'search', keyword: 'landscape' });
+		refFrameWrap.current.style.setProperty('--gap', gap.current + 'px');
 		fetchFlickr({ type: 'user', id: myID.current });
 	}, []);
 
@@ -154,3 +155,20 @@ export default function Gallery() {
 		</>
 	);
 }
+
+/*
+순서  
+1. 일반 동적 데이터를 제외한 일반 정적인 컨텐츠가 렌더링됨 
+	--- 참조객체에 20 상수값을 미리 담아 놓음 
+
+2. 정적인 JSX 요소가 일단 브라우저에 렌더링 완료 되었기 때문에 useEffect 실행가능해짐 
+
+3.useEffect안쪽에서 미리 참조객체에 연결해놓은 refframeWrap에 접근 가능(이때 refFrameWrap에 --gap 변수에 20이라는 값을 강제 적용- 이때부터는 sass파일에 --gap이란 변수가 없더라도 리액트에서 동적으로 gap이라는 변수값을 넣었기 때문에 활용가능)
+
+4. 리액트에 동적으로 변수값을 적용해서 돔을 생성하고 나면 그 이후 scss가 해당 변수값을 읽어서 화면 스타일링 
+
+다시 정리 
+순서1 - 처음에 gap이라는 참조객체값을 해석 
+2. 2번째 렌더링타임에 useEffect가 실행되면서 참조객체에 담겨있는 section요소에 강제로 gap변수값 적용 
+3. 3번째 렌더링 타임에 fetching데이터에 의한 동적요소가 출력되면서 그때 비로소 변수값이 적용된 sass 스타일링 적용 (paint)
+*/

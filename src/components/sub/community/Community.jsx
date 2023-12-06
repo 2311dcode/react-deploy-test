@@ -2,10 +2,17 @@ import Layout from '../../common/layout/Layout';
 import './Community.scss';
 import { ImCancelCircle } from 'react-icons/im';
 import { FiSend } from 'react-icons/fi';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Community() {
-	const [Post, setPost] = useState([]);
+	const getLocalData = () => {
+		//로컬저장소에 post키값에 값이 있으면 parsing해서 리턴
+		const data = localStorage.getItem('post');
+		if (data) return JSON.parse(data);
+		//없으면 그냥 빈배열값을 리턴 (해당 컴포넌트 제일처음 호출될때 한번)
+		else return [];
+	};
+	const [Post, setPost] = useState(getLocalData());
 	const refTit = useRef(null);
 	const refCon = useRef(null);
 	console.log(Post);
@@ -14,9 +21,18 @@ export default function Community() {
 		refTit.current.value = '';
 		refCon.current.value = '';
 	};
-	const createPost = (e) => {
-		setPost([...Post, { title: refTit.current.value, content: refCon.current.value }]);
+	const createPost = () => {
+		if (!refTit.current.value.trim() || !refCon.current.value.trim()) {
+			resetPost();
+			return alert('제목과 본문을 모두 입력하세요.');
+		}
+		setPost([{ title: refTit.current.value, content: refCon.current.value }, ...Post]);
+		resetPost();
 	};
+
+	useEffect(() => {
+		localStorage.setItem('post', JSON.stringify(Post));
+	}, [Post]);
 
 	return (
 		<Layout title={'Community'}>
@@ -34,7 +50,22 @@ export default function Community() {
 						</button>
 					</nav>
 				</div>
-				<div className='showBox'></div>
+				<div className='showBox'>
+					{Post.map((el, idx) => {
+						return (
+							<article key={el + idx}>
+								<div className='txt'>
+									<h2>{el.title}</h2>
+									<p>{el.content}</p>
+								</div>
+								<nav>
+									<button>Edit</button>
+									<button>Delete</button>
+								</nav>
+							</article>
+						);
+					})}
+				</div>
 			</div>
 		</Layout>
 	);
@@ -56,4 +87,13 @@ Read- 데이터호출 - 글목록 보기
 Update- 데이터변경 - 글수정
 Delete -데이터 삭제 - 글삭제
   
+
+Local Storage : 모든 브라우저가 내장하고 있는 경량의 저장소 
+--문자값만 저장가능 (5MB)
+--로컬저장소에 문자열이외의 값을 저장할때에는 강제로 문자화시켜서 저장 
+--로컬저장소의 값을 JS로 가져올때에는 문자값ㅇ르 반대로 객체화시켜서 호출 
+
+localStorage객체에 활용가능한 메서드
+	- setItem('키','문자화된 데이터'); 해당 키값에 데이터를 담아서 저장
+	- getItem('키') : 해당 키값에 매칭이 되는 데이터를 가져옴
 */

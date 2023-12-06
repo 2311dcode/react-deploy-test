@@ -1,25 +1,38 @@
 import Layout from '../../common/layout/Layout';
 import './Community.scss';
 import { ImCancelCircle } from 'react-icons/im';
-import { TfiWrite } from 'react-icons/tfi';
+import { FiSend } from 'react-icons/fi';
+import { useRef, useState } from 'react';
+
 export default function Community() {
+	const [Post, setPost] = useState([]);
+	const refTit = useRef(null);
+	const refCon = useRef(null);
+	console.log(Post);
+
+	const resetPost = (e) => {
+		refTit.current.value = '';
+		refCon.current.value = '';
+	};
+	const createPost = (e) => {
+		setPost([...Post, { title: refTit.current.value, content: refCon.current.value }]);
+	};
+
 	return (
 		<Layout title={'Community'}>
 			<div className='wrap'>
 				<div className='inputBox'>
-					<form action='/' method='get'>
-						<input type='text' placeholder='title' name='tit' />
-						<textarea cols='30' rows='10' name='con' placeholder='content'></textarea>
+					<input type='text' placeholder='title' ref={refTit} />
+					<textarea cols='30' rows='10' placeholder='content' ref={refCon}></textarea>
 
-						<nav>
-							<button>
-								<ImCancelCircle />
-							</button>
-							<button>
-								<TfiWrite />
-							</button>
-						</nav>
-					</form>
+					<nav>
+						<button onClick={resetPost}>
+							<ImCancelCircle />
+						</button>
+						<button onClick={createPost}>
+							<FiSend />
+						</button>
+					</nav>
 				</div>
 				<div className='showBox'></div>
 			</div>

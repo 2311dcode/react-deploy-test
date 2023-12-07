@@ -12,6 +12,9 @@ export default function Gallery() {
 	const isUser = useRef(myID.current);
 	const refNav = useRef(null);
 	const refFrameWrap = useRef(null);
+	//검색함수가 실행됐는지 확인하는 참조객체
+	const searched = useRef(false);
+
 	const gap = useRef(20);
 
 	const [Pics, setPics] = useState([]);
@@ -58,6 +61,8 @@ export default function Gallery() {
 		e.target.children[0].value = '';
 
 		fetchFlickr({ type: 'search', keyword: keyword });
+		//검색함수가 한번이라도 실행되면 영구적으로 초기값을 true로 변경처리
+		searched.current = true;
 	};
 	const fetchFlickr = async (opt) => {
 		const num = 50;
@@ -114,7 +119,7 @@ export default function Gallery() {
 
 				<section className='frameWrap' ref={refFrameWrap}>
 					<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: gap.current }}>
-						{Pics.length === 0 ? (
+						{searched.current && Pics.length === 0 ? (
 							<h2>해당검색어의 결과값이 없습니다</h2>
 						) : (
 							Pics.map((pic, idx) => {

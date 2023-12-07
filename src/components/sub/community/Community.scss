@@ -40,7 +40,6 @@
 		.showBox {
 			--boxGap: 20px;
 			--num: 3;
-
 			width: 70%;
 			padding-left: 50px;
 			border-left: 1px solid rgba(var(--baseColor-code), 0.5);
@@ -51,8 +50,9 @@
 			gap: var(--boxGap);
 
 			article {
+				//(전체넓이값 - 총 gap의 넓이값) / 갯수
 				width: calc((100% - (var(--boxGap) * (var(--num) - 1))) / var(--num));
-				height: 25vh;
+				// height: 25vh;
 				background-color: rgba(var(--baseColor-code), 0.1);
 				padding: 20px;
 				margin-bottom: 20px;
@@ -76,6 +76,19 @@
 						font: 1rem/1.4 'arial';
 						opacity: 0.6;
 						margin-bottom: 40px;
+					}
+
+					input,
+					textarea {
+						width: 100%;
+						border: none;
+
+						padding: 3px 10px;
+						font-size: 1rem;
+						color: var(--baseColor);
+						margin-bottom: 20px;
+
+						resize: none;
 					}
 				}
 

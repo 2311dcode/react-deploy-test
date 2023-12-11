@@ -26,10 +26,10 @@ a {
 	font-size: var(--bodySize);
 	transition: color 1s, background-color 1s;
 
-	* {
-		height: auto;
-		overflow: hidden;
-	}
+	// * {
+	// 	height: auto;
+	// 	overflow: hidden;
+	// }
 	// wrap에 적용된 height/ overflow 자식에 상속 해제
 
 	&::-webkit-scrollbar {

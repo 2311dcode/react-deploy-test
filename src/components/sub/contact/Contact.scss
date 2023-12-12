@@ -1,47 +1,117 @@
 .Contact {
-	.controlBox {
+	#mailSection form {
 		display: flex;
-		justify-content: space-between;
+		align-items: baseline;
+		flex-wrap: wrap;
+		margin-bottom: 50px;
 
-		nav {
-			button {
-				display: inline-block;
-				padding: 10px;
+		label {
+			display: block;
+			margin-top: 20px;
+			margin-bottom: 10px;
+			&:nth-of-type(3) {
+				margin-left: auto;
+			}
+		}
+		input {
+			width: 200px;
+			height: 30px;
+			border: none;
+			border-bottom: 1px solid #555;
+			margin-right: 20px;
+			background: transparent;
+			padding-left: 20px;
 
-				font-size: 1rem;
-				border: none;
-				border-radius: 5px;
-				border: 1px solid #555;
+			&[type='submit'] {
+				margin-left: auto;
+				margin-right: 0;
+				width: 70px;
+			}
+		}
+		textarea {
+			margin-top: 20px;
+			width: 100%;
+			height: 300px;
+			padding: 20px;
+			resize: none;
+			border: 1px solid #555;
+			background: transparent;
+			font-size: 1rem;
+		}
+	}
+	#mapSection {
+		.controlBox {
+			display: flex;
+			justify-content: space-between;
+
+			nav {
+				button {
+					display: inline-block;
+					padding: 10px;
+
+					font-size: 1rem;
+					border: none;
+					border-radius: 5px;
+					border: 1px solid #555;
+
+					&.on {
+						background: #555;
+						color: #fff;
+					}
+				}
+			}
+		}
+
+		.tab {
+			width: 100%;
+			height: 50vh;
+			background-color: var(--baseColor);
+			position: relative;
+
+			filter: saturate(0);
+			transition: filter 0.5s;
+
+			&:hover {
+				filter: saturate(1);
+			}
+
+			.mapBox,
+			.viewBox {
+				width: 100%;
+				height: 100%;
+
+				position: absolute;
+				top: 0;
+				left: 0;
+				opacity: 0;
+				z-index: 1;
 
 				&.on {
-					background: #555;
-					color: #fff;
+					opacity: 1;
+					z-index: 2;
 				}
 			}
 		}
 	}
+}
 
-	.tab {
-		width: 100%;
-		height: 50vh;
-		background-color: var(--baseColor);
-		position: relative;
-
-		.mapBox,
-		.viewBox {
-			width: 100%;
-			height: 100%;
-
-			position: absolute;
-			top: 0;
-			left: 0;
-			opacity: 0;
-			z-index: 1;
-
-			&.on {
-				opacity: 1;
-				z-index: 2;
+.dark {
+	.Contact {
+		#mapSection {
+			.tab {
+				filter: saturate(0) brightness(0.5) contrast(1.5) hue-rotate(180deg);
+				filter: saturate(0) invert(1) contrast(0.7);
 			}
 		}
 	}
 }
+
+/* 
+filter
+-saturate(1) 1보다 작으면 채도 낮추고 크면 채도 올림 
+-brightness(1) 1 보다 작으면 명도를 낮추고 크면 명도를 올림 
+-contrast(1) 1보다 작으면 명암의 대비폭을 낮추고 크면 명도대비를 올림 
+-invert(1)  명도와 색상값을 반전 0은 원래값 
+-hue-rotate(0deg) 현재 색상기준으로 색상환의 각도를 변경해서 색상자체를 바꿈 (180deg반대색)
+
+*/

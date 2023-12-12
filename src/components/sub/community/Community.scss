@@ -20,6 +20,13 @@
 				margin-bottom: 20px;
 				background-color: transparent;
 				resize: none;
+
+				&::placeholder {
+					font-family: var(--baseFont);
+					color: var(--baseColor);
+					font-weight: normal;
+					font-size: 1rem;
+				}
 			}
 
 			nav {

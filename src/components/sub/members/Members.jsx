@@ -1,29 +1,70 @@
+import { useDebounce } from '../../../hooks/useDebounce';
 import Layout from '../../common/layout/Layout';
 import './Members.scss';
 import { useRef, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function Members() {
-	const initVal = useRef({ userid: '', email: '', comments: '', pwd1: '', pwd2: '', edu: '', gender: '', interests: [] });
+	const history = useHistory();
+	const initVal = useRef({ userid: '', pwd1: '', pwd2: '', email: '', comments: '', edu: '', gender: '', interest: [] });
 	const [Val, setVal] = useState(initVal.current);
+	//useDebouce 훅의 인수로 특정 state를 전달해서 debouncing이 적용된 새로운 state값 반환받음
+	const DebouncedVal = useDebounce(Val);
+	const [Errs, setErrs] = useState({});
+
+	const handleReset = () => {
+		setVal(initVal.current);
+	};
 
 	const handleChange = e => {
-		//const key = e.target.name; //userid
-		//const value = e.target.value; //현재 입력하고 있는 인풋값
 		const { name, value } = e.target;
 		setVal({ ...Val, [name]: value });
 	};
 
 	const handleCheck = e => {
-		const checkArr = [];
 		const { name } = e.target;
 		const inputs = e.target.parentElement.querySelectorAll('input');
+		const checkArr = [];
 		inputs.forEach(input => input.checked && checkArr.push(input.value));
 		setVal({ ...Val, [name]: checkArr });
 	};
 
+	const check = value => {
+		console.log('check');
+		const errs = {};
+		const num = /[0-9]/;
+		const txt = /[a-zA-Z]/;
+		const spc = /[!@#$%^&*()[\]_.+]/;
+		const [m1, m2] = value.email.split('@');
+		const m3 = m2 && m2.split('.');
+
+		if (value.userid.length < 5) errs.userid = '아이디는 최소 5글자 이상 입력하세요';
+		if (value.comments.length < 10) errs.comments = '남기는 말은 최소 10글자 이상 입력하세요';
+		if (!value.gender) errs.gender = '성별을 선택하세요';
+		if (value.interest.length === 0) errs.interest = '관심사를 하나이상 선택하세요.';
+		if (!value.edu) errs.edu = '최종학력을 선택하세요.';
+		if (value.pwd1 !== value.pwd2 || !value.pwd2) errs.pwd2 = '두개의 비밀번호를 같게 입력하세요.';
+		if (!m1 || !m2 || !m3[0] || !m3[1]) errs.email = '올바른 이메일 형식으로 입력하세요';
+		if (!num.test(value.pwd1) || !txt.test(value.pwd1) || !spc.test(value.pwd1) || value.pwd1.length < 5)
+			errs.pwd1 = '비밀번호는 특수문자, 문자, 숫자를 모두포함해서 5글자 이상 입력하세요.';
+
+		return errs;
+	};
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		if (Object.keys(check(Val)).length === 0) {
+			alert('회원가입을 축하합니다.');
+			history.push('/welcome/3');
+		}
+	};
+
+	//debounding이 적용된 state를 의존성배열에 등록해서
+	//해당 값으로 check함수 호출
 	useEffect(() => {
-		console.log(Val);
-	}, [Val]);
+		setErrs(check(DebouncedVal));
+	}, [DebouncedVal]);
 
 	return (
 		<Layout title={'Members'}>
@@ -33,7 +74,7 @@ export default function Members() {
 				</div>
 
 				<div className='formBox'>
-					<form>
+					<form onSubmit={handleSubmit}>
 						<fieldset>
 							<legend className='h'>회원가입 폼</legend>
 							<table>
@@ -42,9 +83,11 @@ export default function Members() {
 									<tr>
 										<td>
 											<input type='text' name='userid' placeholder='User ID' value={Val.userid} onChange={handleChange} />
+											{Errs.userid && <p>{Errs.userid}</p>}
 										</td>
 										<td>
 											<input type='text' name='email' placeholder='Email' value={Val.email} onChange={handleChange} />
+											{Errs.email && <p>{Errs.email}</p>}
 										</td>
 									</tr>
 
@@ -52,9 +95,11 @@ export default function Members() {
 									<tr>
 										<td>
 											<input type='password' name='pwd1' placeholder='Password' value={Val.pwd1} onChange={handleChange} />
+											{Errs.pwd1 && <p>{Errs.pwd1}</p>}
 										</td>
 										<td>
 											<input type='password' name='pwd2' placeholder='Re-Password' value={Val.pwd2} onChange={handleChange} />
+											{Errs.pwd2 && <p>{Errs.pwd2}</p>}
 										</td>
 									</tr>
 
@@ -68,6 +113,7 @@ export default function Members() {
 												<option value='high-school'>고등학교 졸업</option>
 												<option value='college'>대학교 졸업</option>
 											</select>
+											{Errs.edu && <p>{Errs.edu}</p>}
 										</td>
 									</tr>
 
@@ -79,6 +125,7 @@ export default function Members() {
 
 											<input type='radio' defaultValue='male' id='male' name='gender' onChange={handleChange} />
 											<label htmlFor='male'>Male</label>
+											{Errs.gender && <p>{Errs.gender}</p>}
 										</td>
 									</tr>
 
@@ -96,6 +143,7 @@ export default function Members() {
 
 											<input type='checkbox' name='interest' id='game' defaultValue='game' onChange={handleCheck} />
 											<label htmlFor='game'>Game</label>
+											{Errs.interest && <p>{Errs.interest}</p>}
 										</td>
 									</tr>
 
@@ -109,13 +157,14 @@ export default function Members() {
 												placeholder='Leave a comment'
 												value={Val.comments}
 												onChange={handleChange}></textarea>
+											{Errs.comments && <p>{Errs.comments}</p>}
 										</td>
 									</tr>
 
 									{/* button set */}
 									<tr>
 										<td colSpan='2'>
-											<input type='reset' value='Cancel' />
+											<input type='reset' value='Cancel' onClick={handleReset} />
 											<input type='submit' value='Submit' />
 										</td>
 									</tr>
@@ -140,4 +189,7 @@ export default function Members() {
 	3. 폼에 submitHandler 함수를 연결
 	4. 전송이벤트가 발생시 submitHandler함수 안쪽에서 check함수를 호출해서 err객체가 있으면 인증 실패
 	5. check함수가 내보내는 err객체가 없으면 인증 성공처리
+
+	history.push('이동하고자 하는 path')
+	goBack(), goForward()앞/뒤로 이동할 수 있는 메소드 
 */

@@ -1,28 +1,37 @@
-import { useRef, useState } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Members.scss';
+import { useRef, useState, useEffect } from 'react';
 
 export default function Members() {
-	const initVal = useRef({
-		userid: '',
-		email: ''
-	});
-
+	const initVal = useRef({ userid: '', email: '', comments: '', pwd1: '', pwd2: '', edu: '', gender: '', interests: [] });
 	const [Val, setVal] = useState(initVal.current);
+
 	const handleChange = e => {
-		// console.log(typeof e.target.name);
-		// console.log(e.target.value);
-		// const key = e.target.name;
-		// const value = e.target.value;
+		//const key = e.target.name; //userid
+		//const value = e.target.value; //현재 입력하고 있는 인풋값
 		const { name, value } = e.target;
-		setVal({ ...Val, [key]: value });
+		setVal({ ...Val, [name]: value });
 	};
+
+	const handleCheck = e => {
+		const checkArr = [];
+		const { name } = e.target;
+		const inputs = e.target.parentElement.querySelectorAll('input');
+		inputs.forEach(input => input.checked && checkArr.push(input.value));
+		setVal({ ...Val, [name]: checkArr });
+	};
+
+	useEffect(() => {
+		console.log(Val);
+	}, [Val]);
+
 	return (
 		<Layout title={'Members'}>
 			<div className='wrap'>
 				<div className='infoBox'>
 					<h2>Join Members</h2>
 				</div>
+
 				<div className='formBox'>
 					<form>
 						<fieldset>
@@ -35,24 +44,24 @@ export default function Members() {
 											<input type='text' name='userid' placeholder='User ID' value={Val.userid} onChange={handleChange} />
 										</td>
 										<td>
-											<input type='text' name='email' placeholder='Email' value={Val.email} />
+											<input type='text' name='email' placeholder='Email' value={Val.email} onChange={handleChange} />
 										</td>
 									</tr>
 
 									{/* pwd1, pwd2 */}
 									<tr>
 										<td>
-											<input type='password' name='pwd1' placeholder='Password' />
+											<input type='password' name='pwd1' placeholder='Password' value={Val.pwd1} onChange={handleChange} />
 										</td>
 										<td>
-											<input type='password' name='pwd2' placeholder='Re-Password' />
+											<input type='password' name='pwd2' placeholder='Re-Password' value={Val.pwd2} onChange={handleChange} />
 										</td>
 									</tr>
 
 									{/* edu */}
 									<tr>
 										<td colSpan='2'>
-											<select name='edu'>
+											<select name='edu' onChange={handleChange}>
 												<option value=''>Education</option>
 												<option value='elementary-school'>초등학교 졸업</option>
 												<option value='middle-school'>중학교 졸업</option>
@@ -65,10 +74,10 @@ export default function Members() {
 									{/* gender */}
 									<tr>
 										<td colSpan='2'>
-											<input type='radio' defaultValue='female' id='female' name='gender' />
+											<input type='radio' defaultValue='female' id='female' name='gender' onChange={handleChange} />
 											<label htmlFor='female'>Female</label>
 
-											<input type='radio' defaultValue='male' id='male' name='gender' />
+											<input type='radio' defaultValue='male' id='male' name='gender' onChange={handleChange} />
 											<label htmlFor='male'>Male</label>
 										</td>
 									</tr>
@@ -76,16 +85,16 @@ export default function Members() {
 									{/* interests */}
 									<tr>
 										<td colSpan='2'>
-											<input type='checkbox' name='interest' id='sports' defaultValue='sports' />
+											<input type='checkbox' name='interest' id='sports' defaultValue='sports' onChange={handleCheck} />
 											<label htmlFor='sports'>Sports</label>
 
-											<input type='checkbox' name='interest' id='reading' defaultValue='reading' />
+											<input type='checkbox' name='interest' id='reading' defaultValue='reading' onChange={handleCheck} />
 											<label htmlFor='reading'>Reading</label>
 
-											<input type='checkbox' name='interest' id='music' defaultValue='music' />
+											<input type='checkbox' name='interest' id='music' defaultValue='music' onChange={handleCheck} />
 											<label htmlFor='music'>Music</label>
 
-											<input type='checkbox' name='interest' id='game' defaultValue='game' />
+											<input type='checkbox' name='interest' id='game' defaultValue='game' onChange={handleCheck} />
 											<label htmlFor='game'>Game</label>
 										</td>
 									</tr>
@@ -93,9 +102,17 @@ export default function Members() {
 									{/* comments  */}
 									<tr>
 										<td colSpan='2'>
-											<textarea name='comments' cols='30' rows='5' placeholder='Leave a comment'></textarea>
+											<textarea
+												name='comments'
+												cols='30'
+												rows='5'
+												placeholder='Leave a comment'
+												value={Val.comments}
+												onChange={handleChange}></textarea>
 										</td>
 									</tr>
+
+									{/* button set */}
 									<tr>
 										<td colSpan='2'>
 											<input type='reset' value='Cancel' />

@@ -24,7 +24,7 @@ const historyReducer = (state = [], action) => {
 const youtubeReducer = (state = [], action) => {
 	switch (action.type) {
 		case 'SET_YOUTUBE':
-			return { ...state, outube: action.payload };
+			return { ...state, youtube: action.payload };
 		case 'SET_YOUTUBE_ERR':
 			return { ...state, youtube: action.payload };
 		default:
@@ -32,9 +32,19 @@ const youtubeReducer = (state = [], action) => {
 	}
 };
 
+const modalReducer = (state = [], action) => {
+	switch (action.type) {
+		case type.MODAL.start:
+			return { ...state, modal: action.payload };
+
+		default:
+			return state;
+	}
+};
+
 //해당파일에서 내보내는 여러개의 reducer객체를 합쳐서 외부로 export -combineReducers
 
-const reducers = combineReducers({ memberReducer, historyReducer, youtubeReducer });
+const reducers = combineReducers({ memberReducer, historyReducer, youtubeReducer, modalReducer });
 export default reducers;
 
 /* 
@@ -96,4 +106,13 @@ const memberReducer = (state = initMember, action) => {
 		return state;
 	}
 };
+*/
+
+/* 
+컴포넌트에서 정보값을 받아서 
+가져오거나 변경요청하는 역할 
+action 객체가 필요 
+은향 츌금시 출금양식처럼 
+일정양식에 맞는 틀 역할 
+타입 페이로드 에 따라 바꿔치기  
 */

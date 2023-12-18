@@ -16,3 +16,13 @@ export const YOUTUBE = {
 	success: 'YOUTUBE_SUCCESS',
 	fail: 'YOUTUBE_FAIL'
 };
+
+export const MODAL = {
+	start: 'MODAL_START'
+};
+
+/* 
+action 타입 관리 
+미리 작업해 놓는 것이 좋다 
+작업순서 1번 
+*/

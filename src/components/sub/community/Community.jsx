@@ -4,28 +4,19 @@ import './Community.scss';
 import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useCustomText } from '../../../hooks/useText';
-import postData from './dummyPosts.json';
 
 export default function Community() {
-	console.log('community');
 	const changeText = useCustomText('combined');
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
-		if (data) return JSON.parse(data);
-		else return postData.dummyPosts;
+		return JSON.parse(data);
 	};
 	const [Post, setPost] = useState(getLocalData());
-	const [CurNum, setCurNum] = useState(0); //페이징 버튼 클릭시 현재 보일 페이지 번호가 담길 state
-	const [PageNum, setPageNum] = useState(0); //전체 PageNum이 담길 state
-
 	const refTit = useRef(null);
 	const refCon = useRef(null);
 	const refEditTit = useRef(null);
 	const refEditCon = useRef(null);
 	const editMode = useRef(false);
-	const len = useRef(0); //전체 Post갯수를 담을 참조 객체
-	const pageNum = useRef(0); //전체 페이지 갯수를 추후에 연산해서 담을 참조객체
-	const perNum = useRef(6); //한 페이지당 보일 포스트 갯수
 
 	//input 초기화 함수
 	const resetPost = () => {
@@ -95,42 +86,14 @@ export default function Community() {
 		);
 	};
 
-	const filtering = txt => {
-		const abc = Post.filter(el => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
-		console.log(abc);
-	};
-
 	useEffect(() => {
+		//Post데이터가 변경되면 수정모드를 강제로 false처리하면서 로컬저장소에 저장하고 컴포넌트 재실행
 		Post.map(el => (el.enableUpdate = false));
 		localStorage.setItem('post', JSON.stringify(Post));
-
-		len.current = Post.length;
-
-		// pageNum.current = len.current % perNum.current === 0 ? len.current / perNum.current : parseInt(len.current / perNum.current) + 1;
-
-		pageNum.current = Math.ceil(len.current / perNum.current);
-		//새로고침했을때 페이징 버튼이 안뜨는 문제
-		//원인 : 현재 로직이 Post값자체게 변경되면 pageNum.current값이 변경되게 하고 있는데..
-		//pageNum.current가 변경되고 state가 아니기 때문에 화면을 자동 재랜더링하지 않는 문제 발생
-		//해결방법 : 만들어진 참조객체값을 state PageNum에 옮겨담음
-		setPageNum(pageNum.current);
 	}, [Post]);
 
 	return (
 		<Layout title={'Community'}>
-			{/* 위에서 만든 pageNum값을 활용해 자동으로 페이지버튼 생성 */}
-			<nav className='pagination'>
-				{Array(PageNum)
-					.fill()
-					.map((_, idx) => {
-						return (
-							<button key={idx} onClick={() => idx !== CurNum && setCurNum(idx)} className={idx === CurNum ? 'on' : ''}>
-								{idx + 1}
-							</button>
-						);
-					})}
-			</nav>
-
 			<div className='communityWrap'>
 				<div className='inputBox'>
 					<input type='text' placeholder='title' ref={refTit} />
@@ -151,40 +114,37 @@ export default function Community() {
 						const date = JSON.stringify(el.date);
 						const strDate = changeText(date.split('T')[0].slice(1), '.');
 
-						if (idx >= perNum.current * CurNum && idx < perNum.current * (CurNum + 1)) {
+						if (el.enableUpdate) {
+							//수정모드
 							return (
 								<article key={el + idx}>
-									{el.enableUpdate ? (
-										//수정모드
-										<>
-											<div className='txt'>
-												<input type='text' defaultValue={el.title} ref={refEditTit} />
-												<textarea cols='30' rows='4' defaultValue={el.content} ref={refEditCon}></textarea>
-												<span>{strDate}</span>
-											</div>
-											<nav>
-												<button onClick={() => disableUpdate(idx)}>Cancel</button>
-												<button onClick={() => updatePost(idx)}>Update</button>
-											</nav>
-										</>
-									) : (
-										//출력모드
-										<>
-											<div className='txt'>
-												<h2>{el.title}</h2>
-												<p>{el.content}</p>
-												<span>{strDate}</span>
-											</div>
-											<nav>
-												<button onClick={() => enableUpdate(idx)}>Edit</button>
-												<button onClick={() => deletePost(idx)}>Delete</button>
-											</nav>
-										</>
-									)}
+									<div className='txt'>
+										<input type='text' defaultValue={el.title} ref={refEditTit} />
+										<textarea cols='30' rows='4' defaultValue={el.content} ref={refEditCon}></textarea>
+										<span>{strDate}</span>
+									</div>
+									<nav>
+										{/* 수정모드 일때 해당 버튼 클릭시 다시 출력모드 변경 */}
+										<button onClick={() => disableUpdate(idx)}>Cancel</button>
+										<button onClick={() => updatePost(idx)}>Update</button>
+									</nav>
 								</article>
 							);
 						} else {
-							return null;
+							//출력모드
+							return (
+								<article key={el + idx}>
+									<div className='txt'>
+										<h2>{el.title}</h2>
+										<p>{el.content}</p>
+										<span>{strDate}</span>
+									</div>
+									<nav>
+										<button onClick={() => enableUpdate(idx)}>Edit</button>
+										<button onClick={() => deletePost(idx)}>Delete</button>
+									</nav>
+								</article>
+							);
 						}
 					})}
 				</div>

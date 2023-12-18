@@ -4,6 +4,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
+import store from './redux/store';
 
 ReactDOM.render(
 	<BrowserRouter>
@@ -14,6 +15,9 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
+/* 
+step4 - Store전역 객체 App 컴포넌트에 전달
+*/
 /* 
 actionType.js 
 --문자열인 액션타입명을 재활용하기 편하게 객체형태로 미리 정의한 액션타입 모음집 

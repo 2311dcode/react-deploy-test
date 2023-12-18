@@ -1,50 +1,54 @@
 import { combineReducers } from 'redux';
+import * as types from './action';
 
-/* 
-순서1- 리듀서 함수 호출되면서 빈배열로 멤버 데이터가 저장될 state값 초기화 
-*/
-const memberReducer = (state = [], action) => {
+const memberReducer = (state = { members: [] }, action) => {
 	switch (action.type) {
-		case 'SET_MEMBERS':
+		case types.MEMBER.success:
 			return { ...state, members: action.payload };
 		default:
 			return state;
 	}
 };
 
-const historyReducer = (state = [], action) => {
+const historyReducer = (state = { history: [] }, action) => {
 	switch (action.type) {
-		case 'SET_HISTORY':
+		case types.HISTORY.success:
 			return { ...state, history: action.payload };
 		default:
 			return state;
 	}
 };
 
-const youtubeReducer = (state = [], action) => {
+const youtubeReducer = (state = { youtube: [] }, action) => {
 	switch (action.type) {
-		case 'SET_YOUTUBE':
+		case types.YOUTUBE.success:
 			return { ...state, youtube: action.payload };
-		case 'SET_YOUTUBE_ERR':
+		case types.YOUTUBE.fail:
 			return { ...state, youtube: action.payload };
 		default:
 			return state;
 	}
 };
 
-const modalReducer = (state = [], action) => {
+const modalReducer = (state = { modal: false }, action) => {
 	switch (action.type) {
-		case type.MODAL.start:
+		case types.MODAL.start:
 			return { ...state, modal: action.payload };
-
 		default:
 			return state;
 	}
 };
 
-//해당파일에서 내보내는 여러개의 reducer객체를 합쳐서 외부로 export -combineReducers
+const menuReducer = (state = { menu: false }, action) => {
+	switch (action.type) {
+		case types.MENU.start:
+			return { ...state, menu: action.payload };
+		default:
+			return state;
+	}
+};
 
-const reducers = combineReducers({ memberReducer, historyReducer, youtubeReducer, modalReducer });
+const reducers = combineReducers({ memberReducer, historyReducer, youtubeReducer, modalReducer, menuReducer });
 export default reducers;
 
 /* 

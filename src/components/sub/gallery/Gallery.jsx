@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import Masonry from 'react-masonry-component';
 import Layout from '../../common/layout/Layout';
+import Masonry from 'react-masonry-component';
+import { LuSearch } from 'react-icons/lu';
+import { useDispatch } from 'react-redux';
 import Modal from '../../common/modal/Modal';
 import './Gallery.scss';
-import { LuSearch } from 'react-icons/lu';
+
+import * as types from '../../../redux/action';
 
 export default function Gallery() {
+	const dispatch = useDispatch();
 	// console.log('re-render');
 	const myID = useRef('187597869@N08');
 	//isUser의 초기값을 내 아이디 문자값으로 등록
@@ -128,7 +132,7 @@ export default function Gallery() {
 										<div
 											className='pic'
 											onClick={() => {
-												setOpen(true);
+												dispatch({ type: types.MODAL.start, payload: true });
 												setIndex(idx);
 											}}>
 											<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={pic.title} />
@@ -151,7 +155,7 @@ export default function Gallery() {
 				</section>
 			</Layout>
 
-			<Modal Open={Open} setOpen={setOpen}>
+			<Modal>
 				{Pics.length !== 0 && (
 					<img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt={Pics[Index].title} />
 				)}

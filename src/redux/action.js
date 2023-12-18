@@ -21,6 +21,10 @@ export const MODAL = {
 	start: 'MODAL_START'
 };
 
+export const MENU = {
+	start: 'MENU_START'
+};
+
 /* 
 action 타입 관리 
 미리 작업해 놓는 것이 좋다 

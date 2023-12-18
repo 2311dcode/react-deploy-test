@@ -1,5 +1,41 @@
 import './Modal.scss';
 import { AnimatePresence, motion } from 'framer-motion';
+import { UseSelector, useDispatch, useSelector } from 'react-redux';
+import * as types from '../../../redux/action';
+
+export default function Modal({ children }) {
+	const dispatch = useDispatch();
+	const Open = useSelector(store => store.modalReducer.modal);
+
+	return (
+		<AnimatePresence>
+			{Open && (
+				<motion.aside
+					className='Modal'
+					initial={{ opacity: 0, x: '-100%', scale: 0, rotate: -45 }}
+					animate={{ opacity: 1, x: '0%', scale: 1, rotate: 0 }}
+					exit={{ opacity: 0, y: '100%', scale: 2, rotate: 45 }}
+					transition={{ duration: 1 }}>
+					<div
+						className='con'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0, transition: { delay: 0 } }}
+						transition={{ duration: 0.5, delay: 1 }}>
+						{children}
+					</div>
+					<span
+						onClick={() => {
+							dispatch({ type: types.MODAL.start, payload: true });
+						}}>
+						close
+					</span>
+				</motion.aside>
+			)}
+		</AnimatePresence>
+	);
+}
+
 /* 
 모달 컴포넌트 자체적을 ㅗ특정 state값에 따라서 자기 자신의 컨텐츠를 보여줄ㅈ지 말지를 결정 
 부모 컴포넌트 기준에서 Modal컴포넌트는 계속 마운트 되어 있는 생태이지만 
@@ -15,36 +51,3 @@ initial : 모션이 일어나기 전 상태값
 animate : 모션이 일어날 때의 상태값 
 exit : 모션이 사라질때의 상태값 
 */
-
-export default function Modal({ Open, setOpen, children }) {
-	return (
-		<AnimatePresence>
-			{Open && (
-				<motion.aside
-					className='Modal'
-					initial={{ opacity: 0, x: '-100%', scale: 0, rotate: -45 }}
-					animate={{ opacity: 1, x: '0%', scale: 1, rotate: 0 }}
-					exit={{ opacity: 0, y: '100%', scale: 2, rotate: 45 }}
-					transition={{ duration: 1 }}
-				>
-					<div
-						className='con'
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0, transition: { delay: 0 } }}
-						transition={{ duration: 0.5, delay: 1 }}
-					>
-						{children}
-					</div>
-					<span
-						onClick={() => {
-							setOpen(false);
-						}}
-					>
-						close
-					</span>
-				</motion.aside>
-			)}
-		</AnimatePresence>
-	);
-}

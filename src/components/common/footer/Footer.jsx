@@ -13,7 +13,9 @@ export default function Footer() {
 			<p>2023 Dcodelab &copy; All Rights Reserved.</p>
 			{/* 아래 코드에서 조건문 쓴 이류 */}
 			{/* 첫번째 렌더링시에는 store 로부터 빈배열이 전달되므로 두번째 렌더링부터 해당구문이 실행되도록 옵셔널 체이닝 처리 */}
-			<p>{MemberData && `${MemberData[0].position}:${MemberData[0].name}`}</p>
+			<p>
+				{MemberData[0]?.position}:{MemberData[0]?.name}
+			</p>
 			<ul>
 				<li>
 					<FaFacebookF />

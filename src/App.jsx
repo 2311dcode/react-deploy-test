@@ -15,6 +15,7 @@ import { useMedia } from './hooks/useMedia';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import * as types from './redux/action';
 
 //git confige option 수정
 export default function App() {
@@ -22,19 +23,18 @@ export default function App() {
 	const dispatch = useDispatch();
 	const path = useRef(process.env.PUBLIC_URL);
 	const [Dark, setDark] = useState(false);
-	const [Toggle, setToggle] = useState(false);
 
 	//순서3 - fetching된 데이터값을 받아서 액션객체에 담은 뒤 dispatch로 리듀서에 전달하는 함수를 정의
 	const fetchDepartment = useCallback(async () => {
 		const data = await fetch(`${path.current}/DB/department.json`);
 		const json = await data.json();
-		dispatch({ type: 'SET_MEMBERS', payload: json.members });
+		dispatch({ type: types.MEMBER.success, payload: json.members });
 	}, [dispatch]);
 
 	const fetchHistory = useCallback(async () => {
 		const data = await fetch(`${path.current}/DB/history.json`);
 		const json = await data.json();
-		dispatch({ type: 'SET_HISTORY', payload: json.history });
+		dispatch({ type: types.HISTORY.success, payload: json.history });
 	}, [dispatch]);
 
 	const fetchYoutube = useCallback(async () => {
@@ -46,9 +46,9 @@ export default function App() {
 		try {
 			const data = await fetch(baseURL);
 			const json = await data.json();
-			dispatch({ type: 'SET_YOUTUBE', payload: json.items });
+			dispatch({ type: types.YOUTUBE.success, payload: json.items });
 		} catch (err) {
-			dispatch({ type: 'SET_YOUTUBE_ERR', payload: err });
+			dispatch({ type: types.YOUTUBE.fail, payload: err });
 		}
 	}, [dispatch]);
 
@@ -65,7 +65,7 @@ export default function App() {
 
 	return (
 		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
-			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
+			<Header Dark={Dark} setDark={setDark} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/gallery' component={Gallery} />
@@ -75,7 +75,7 @@ export default function App() {
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/detail/:id' component={Detail} />
 			<Footer />
-			{Toggle && <Menu setToggle={setToggle} />}
+			<Menu />
 		</div>
 	);
 }

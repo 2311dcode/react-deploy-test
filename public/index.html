@@ -15,3 +15,48 @@
 </body>
 
 </html>
+
+<!-- 
+Generator : 해당 함수 안쪽의 자식 자식 함수으 ㅣ리턴값을 반복가능한 객체 형태로 묶어서 반환(Iterable Object)
+
+Iterable Object : next라는 메서드를 호출해서 Generator 안쪽에 있는 함수들을 원하는 시점에 동기적을 ㅗ호출 가능 
+
+promise(then, catch, async await)와 더불어서 ES7이후에 나온 동기화 처리 함수 
+
+promise대비 Generator 장점 
+- promise와는 달리 특정 코드를 동기화시킬때 호출시점을 지정가능 
+- 하나의 함수안에서 리턴값을 여러개 반환 가능 
+
+function test1(){
+  console.log("test1"); 
+  return 'test1'; 
+}
+function test2(){
+  console.log("test2"); 
+  return 'test2'; 
+}
+function test3(){
+  console.log("test3"); 
+  return 'test3'; 
+}
+
+//복잡한 비동기를 동기화 시키려고 함 
+//함수호출하는 순간 객체형태로 묶어서 원하는 시점에 호출 
+function* generator(){
+  yield test1(); 
+  yield test2(); 
+  yield test3(); 
+}
+
+const result = generator(); 
+const r1 = result.next(); 
+console.log(r1); //{value:'test1', done:false} //false는 아직 반복가능 뜻 
+
+console.log('중간작업'); 
+const r2 = result.next();  //test2 
+console.log(r2); // { value:'test2',  done:false}
+
+console.log('last'); 
+const last = result.next();  //test3 
+console.log(r2); // { value:undefined,  done:true} //더 작업할게 없다 
+ -->

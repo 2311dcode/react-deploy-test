@@ -1,17 +1,11 @@
 import './Modal.scss';
-//npm i framer-motion@4
 import { AnimatePresence, motion } from 'framer-motion';
+import { useSelector, useDispatch } from 'react-redux';
+import * as types from '../../../redux/actionType';
 
-/*
-  AnimatePresence: 모션을 적용할 컴포넌트의 wrapping컴포넌트 지정
-  - 자식요소의 모션이 끝날때까지 컴포넌트가 언마운트 되는 시점을 hoding처리
-  motion: 모션을 걸고 싶은 JSX컴포넌트에 연결해서 initial, animate, exit라는 속성으로 모션수치값을 조절 가능
-  -initial: 모션이 일어나기 전 상태값
-  -animate: 모션이 일어날때의 상태값
-  -eixt: 사라질떄의 상태값
-*/
-
-export default function Modal({ Open, setOpen, children }) {
+export default function Modal({ children }) {
+	const dispatch = useDispatch();
+	const Open = useSelector(store => store.modalReducer.modal);
 	return (
 		<AnimatePresence>
 			{Open && (
@@ -29,13 +23,12 @@ export default function Modal({ Open, setOpen, children }) {
 						transition={{ duration: 0.5, delay: 1 }}>
 						{children}
 					</motion.div>
-					<span onClick={() => setOpen(false)}>close</span>
+					<span onClick={() => dispatch({ type: types.MODAL.start, payload: false })}>close</span>
 				</motion.aside>
 			)}
 		</AnimatePresence>
 	);
 }
-
 /* 
 모달 컴포넌트 자체적으로 특정 state값에 따라서 자기 자신의 컨텐츠를 보여줄ㅈ지 말지를 결정 
 부모 컴포넌트 기준에서 Modal컴포넌트는 계속 마운트 되어 있는 생태이지만 

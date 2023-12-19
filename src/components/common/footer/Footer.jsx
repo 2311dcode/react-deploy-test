@@ -18,9 +18,9 @@ export default function Footer() {
 					<FaTwitter />
 				</li>
 				<li>
-					<Link to={{ pathname: 'https://www.facebook.com' }} target='_blank'>
+					<a href='https://www.face.com' target='_self' rel='noopener noreferrer'>
 						<FaYoutube />
-					</Link>
+					</a>
 				</li>
 			</ul>
 		</footer>

@@ -5,18 +5,23 @@ import { useCustomText } from '../../../hooks/useText';
 import { useSelector } from 'react-redux';
 
 export default function Department() {
-	const MemberData = useSelector(store => store.memberReducer.members);
-	const HistoryData = useSelector(store => store.historyReducer.history);
-	console.log(HistoryData);
 	const combinedTitle = useCustomText('combined');
 	const path = useRef(process.env.PUBLIC_URL);
+
+	const { historyReducer, membersReducer } = useSelector(store => store);
+	console.log(historyReducer, membersReducer);
+
+	const HistoryTit = Object.keys(historyReducer)[0];
+	const HistoryData = Object.values(historyReducer)[0];
+	const MemberTit = Object.keys(membersReducer)[0];
+	const MemberData = Object.values(membersReducer)[0];
 
 	return (
 		<Layout title={'Department'}>
 			<section className='historyBox'>
-				<h2>{combinedTitle('History')}</h2>
+				<h2>{combinedTitle(HistoryTit)}</h2>
 				<div className='con'>
-					{HistoryData?.map((history, idx) => {
+					{HistoryData.map((history, idx) => {
 						return (
 							<article key={history + idx}>
 								<h3>{Object.keys(history)[0]}</h3>
@@ -32,10 +37,10 @@ export default function Department() {
 			</section>
 
 			<section className='memberBox'>
-				<h2>{combinedTitle('Members')}</h2>
+				<h2>{combinedTitle(MemberTit)}</h2>
 
 				<div className='con'>
-					{MemberData?.map((member, idx) => {
+					{MemberData.map((member, idx) => {
 						return (
 							<article key={member + idx}>
 								<div className='pic'>

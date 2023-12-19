@@ -23,11 +23,11 @@ export default function Contact() {
 		e.preventDefault();
 
 		const [user, email] = form.current.querySelectorAll('input');
-		const textArea = form.current.querySelector('textarea');
+		const txtArea = form.current.querySelector('textarea');
 
-		if (!user.value || !email.value || !textArea.value) return alert('이름, 답장받을 이메일 주소, 문의내용을 모두 입력하세요');
+		if (!user.value || !email.value || !txtArea.value) return alert('이름, 답장받을 이메일주소 문의내용을 모두 입력하세요.');
 
-		emailjs.sendForm('service_g2s4dkh', 'template_uskinb4', form.current, 'N7SDztHUZoJMv_aPI').then(
+		emailjs.sendForm('service_ag7z96s', 'template_oh9ajns', form.current, '23g8RepczesqKPoIX').then(
 			result => {
 				alert('문의 내용이 성공적으로 전송되었습니다.');
 				resetForm();
@@ -106,13 +106,8 @@ export default function Contact() {
 		setView(false);
 
 		roadview.current();
-		//지도 타입 컨트롤러 추가
 		mapInstance.current.addControl(new kakao.current.maps.MapTypeControl(), kakao.current.maps.ControlPosition.TOPRIGHT);
-
-		//지도 줌 컨트롤러 추가
 		mapInstance.current.addControl(new kakao.current.maps.ZoomControl(), kakao.current.maps.ControlPosition.RIGHT);
-
-		//휠에 맵 줌 기능 비활성화
 		mapInstance.current.setZoomable(false);
 
 		window.addEventListener('resize', setCenter);
@@ -167,25 +162,4 @@ export default function Contact() {
 	1.cdn불러온 window에 불러온 외부 객체값을 가져와서 인스턴스 생성
 	2.인스턴스값을 참조객체 담는 이유 (의존성배열에 불필요하게 등록하지 않기 위해서)
 	3.화면변경점이 발생해야 될떄 state값에 따라서 변경되게 로직화한 다음 이벤트 발생시 state를 변경해서 화면 재랜더링 유도
-*/
-
-/*
-	1.cdn불러온 window에 불러온 외부 객체값을 가져와서 인스턴스 생성
-	2.인스턴스값을 참조객체 담는 이유 (의존성배열에 불필요하게 등록하지 않기 위해서)
-	3.화면변경점이 발생해야 될떄 state값에 따라서 변경되게 로직화한 다음 이벤트 발생시 state를 변경해서 화면 재랜더링 유도
-
-		const sendEmail = e => {
-		e.preventDefault();
-
-		emailjs.sendForm('service_g2s4dkh', 'template_uskinb4', form.current, 'N7SDztHUZoJMv_aPI').then(
-			result => {
-				alert('문의 내용이 성공적으로 전송되었습니다.');
-				resetForm();
-			},
-			error => {
-				alert('일시적인 장애로 문의 전송에 실패했습니다. 다음의 메일주소로 보내주세요.');
-				resetForm();
-			}
-		);
-	};
 */

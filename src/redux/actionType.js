@@ -27,3 +27,10 @@ export const MODAL = {
 	success: 'MODAL_SUCCESS',
 	fail: 'MODAL_FAIL'
 };
+
+export const MENU = {
+	start: 'MENU_START'
+};
+export const DARK = {
+	start: 'DARK_START'
+};

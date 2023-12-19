@@ -6,10 +6,6 @@ import emailjs from '@emailjs/browser';
 export default function Contact() {
 	const form = useRef();
 
-	//그룹형식의 DOM을 탐색할때 반환되는 두가지형태의 유사배열
-	//parentDOM.children : HTMLCollection (유사배열: forEach, map 모두 반복불가, Live DOM:상태변경이 실시간)
-	//parentDOM.querySelectorAll : NodeList (유사배열: forEach로는 반복 가능. Static DOM:탐색된 시점의 정적 DOM)
-
 	const resetForm = () => {
 		const elArr = form.current.children;
 
@@ -83,15 +79,16 @@ export default function Contact() {
 		image: new kakao.current.maps.MarkerImage(mapInfo.current[Index].imgSrc, mapInfo.current[Index].imgSize, mapInfo.current[Index].imgOpt)
 	});
 
-	const roadview = useRef(() => {
+	const roadview = useCallback(() => {
+		if (!View) return;
 		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, panoId => {
 			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng);
 		});
-	});
+	}, [View, Index]);
 
 	const setCenter = useCallback(() => {
 		mapInstance.current.setCenter(mapInfo.current[Index].latlng);
-		roadview.current();
+		//roadview.current();
 	}, [Index]);
 
 	//컴포넌트 마운트시 참조객체에 담아놓은 돔 프레임에 지도 인스턴스 출력 및 마커 세팅
@@ -105,7 +102,7 @@ export default function Contact() {
 		setTraffic(false);
 		setView(false);
 
-		roadview.current();
+		//roadview.current();
 		mapInstance.current.addControl(new kakao.current.maps.MapTypeControl(), kakao.current.maps.ControlPosition.TOPRIGHT);
 		mapInstance.current.addControl(new kakao.current.maps.ZoomControl(), kakao.current.maps.ControlPosition.RIGHT);
 		mapInstance.current.setZoomable(false);

@@ -1,12 +1,12 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback } from 'react';
 import './Menu.scss';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import * as types from '../../../redux/action';
+import * as types from '../../../redux/actionType';
 
 export default function Menu() {
 	const dispatch = useDispatch();
-	const Toggle = useSelector(store => store.menuReducer.menu);
+	const Open = useSelector(store => store.menuReducer.menu);
 
 	const closeMenu = useCallback(() => {
 		window.innerWidth >= 1000 && dispatch({ type: types.MENU.start, payload: false });
@@ -19,8 +19,8 @@ export default function Menu() {
 
 	return (
 		<>
-			{Toggle && (
-				<aside className='Menu'>
+			{Open && (
+				<aside className='Menu' onClick={() => dispatch({ type: types.MENU.start, payload: false })}>
 					<h1>Mobile Menu</h1>
 					<ul>
 						<li>

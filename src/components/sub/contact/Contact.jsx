@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Contact.scss';
 import emailjs from '@emailjs/browser';
+import { useThrottle } from '../../../hooks/useThrottle';
 
 export default function Contact() {
 	const form = useRef();
@@ -44,7 +45,6 @@ export default function Contact() {
 
 	const mapFrame = useRef(null);
 	const viewFrame = useRef(null);
-
 	const marker = useRef(null);
 	const mapInstance = useRef(null);
 
@@ -79,21 +79,27 @@ export default function Contact() {
 		image: new kakao.current.maps.MarkerImage(mapInfo.current[Index].imgSrc, mapInfo.current[Index].imgSize, mapInfo.current[Index].imgOpt)
 	});
 
+	//로드뷰 출력함수
 	const roadview = useCallback(() => {
-		if (!View) return;
 		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, panoId => {
 			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng);
 		});
-	}, [View, Index]);
+	}, [Index]);
 
+	//지도위치 가운데 보정 함수
 	const setCenter = useCallback(() => {
 		mapInstance.current.setCenter(mapInfo.current[Index].latlng);
 		//roadview.current();
 	}, [Index]);
 
-	//컴포넌트 마운트시 참조객체에 담아놓은 돔 프레임에 지도 인스턴스 출력 및 마커 세팅
+	//useThrottle로 setCenter함수를 인수로 넣어서 throttling적용된 새로운 함수로 변환
+	const throttledSetCenter = useThrottle(setCenter, 100);
+
+	//Index값 변경시마다 지도정보 갱신해서 화면 재랜더링 useEffect
 	useEffect(() => {
+		//Index값이 변경되는 것은 출력할 맵정보가 변경된다는 의미이므로 기존 프레임 안쪽의 정보를 지워서 초기화
 		mapFrame.current.innerHTML = '';
+		viewFrame.current.innerHTML = '';
 		mapInstance.current = new kakao.current.maps.Map(mapFrame.current, {
 			center: mapInfo.current[Index].latlng,
 			level: 3
@@ -102,20 +108,28 @@ export default function Contact() {
 		setTraffic(false);
 		setView(false);
 
-		//roadview.current();
 		mapInstance.current.addControl(new kakao.current.maps.MapTypeControl(), kakao.current.maps.ControlPosition.TOPRIGHT);
 		mapInstance.current.addControl(new kakao.current.maps.ZoomControl(), kakao.current.maps.ControlPosition.RIGHT);
 		mapInstance.current.setZoomable(false);
 
-		window.addEventListener('resize', setCenter);
-		return () => window.removeEventListener('resize', setCenter);
-	}, [Index, setCenter]);
+		//resize이벤트에 throttle적용된 함수를 등록 (이벤트 자체는 1초에 60번 발생하지만 핸들러함수는 1초에 2번만 실행됨 )
+		window.addEventListener('resize', throttledSetCenter);
+		return () => window.removeEventListener('resize', throttledSetCenter);
+	}, [Index, throttledSetCenter]);
 
+	//Traffic 토글시마다 화면 재랜더링 useEffect
 	useEffect(() => {
 		Traffic
 			? mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC)
 			: mapInstance.current.removeOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC);
 	}, [Traffic]);
+
+	//View토글시마다 화면 재랜더링 useEffect
+	useEffect(() => {
+		//view토글시에 무조건 로드뷰정보를 호출하는 것이 아닌 viewFrame안의 내용이 없을때만 호출하고
+		//값이 있을때에는 기존데이터를 재활용해서 불필요한 roadview중복호출을 막음으로서 고용량이 이미지 refetching을 방지
+		View && viewFrame.current.children.length === 0 && roadview();
+	}, [View, roadview]);
 
 	return (
 		<Layout title={'Contact'}>

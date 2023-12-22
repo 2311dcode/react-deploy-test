@@ -14,6 +14,14 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
+/*
+	Redux버전에서 숙지할 내용
+	1.flickr빼고 비동기 데이터 사용 컴포넌트에서 store로 데이터 공유 (Member, History, Youtube)
+	2.client side data가 store로 공유 (Modal, Memu, Dark)
+	3.Layout에서 0.3초있다 on붙게 되는데 라우터이동이 0.3초보다 빨리 이동될때 optionial chaing으로 에러핸들링
+	4.Contact컴포넌트에서 throttle이 적용된 throttledSetCenter resize이벤트 연결문을 따로 useEffect로 분리
+*/
+
 /* 
 --redux---
 	store : 어떤 컴포넌트에서든 자유롭게 데이터를 공유할 수 있게 컴포넌트 외부에 있는 독립적인 전역 데이터 공간

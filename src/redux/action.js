@@ -1,4 +1,3 @@
-//각 데이터 카테고리별 사용될 액션타입명을 변수처럼 모아놓은 객체
 export const MEMBER = {
 	start: 'MEMBER_START',
 	success: 'MEMBER_SUCCESS',
@@ -21,8 +20,10 @@ export const MODAL = {
 	start: 'MODAL_START'
 };
 
-/* 
-action 타입 관리 
-미리 작업해 놓는 것이 좋다 
-작업순서 1번 
-*/
+export const MENU = {
+	start: 'MENU_START'
+};
+
+export const DARK = {
+	start: 'DARK_START'
+};

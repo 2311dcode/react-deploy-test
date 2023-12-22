@@ -11,6 +11,8 @@ export default function Info() {
 		if (data) return JSON.parse(data);
 		else return postData.dummyPosts;
 	};
+	const [Post] = useState(getLocalData());
+
 	useEffect(() => {
 		localStorage.setItem('post', JSON.stringify(Post));
 	}, [Post]);

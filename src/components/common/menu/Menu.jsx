@@ -1,16 +1,11 @@
 import { useEffect, useCallback, useRef } from 'react';
 import './Menu.scss';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import * as types from '../../../redux/action';
 
-export default function Menu() {
-	const dispatch = useDispatch();
-	const Toggle = useSelector(store => store.menuReducer.menu);
-
+export default function Menu({ setToggle }) {
 	const closeMenu = useCallback(() => {
-		window.innerWidth >= 1000 && dispatch({ type: types.MENU.start, payload: false });
-	}, [dispatch]);
+		window.innerWidth >= 1000 && setToggle(false);
+	}, [setToggle]);
 
 	useEffect(() => {
 		window.addEventListener('resize', closeMenu);
@@ -18,44 +13,40 @@ export default function Menu() {
 	}, [closeMenu]);
 
 	return (
-		<>
-			{Toggle && (
-				<aside className='Menu'>
-					<h1>Mobile Menu</h1>
-					<ul>
-						<li>
-							<NavLink to='/department' activeClassName={'on'}>
-								Department
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to='/youtube' activeClassName={'on'}>
-								Youtube
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to='/gallery' activeClassName={'on'}>
-								Gallery
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to='/community' activeClassName={'on'}>
-								Community
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to='/members' activeClassName={'on'}>
-								Members
-							</NavLink>
-						</li>
-						<li>
-							<NavLink to='/contact' activeClassName={'on'}>
-								Contact
-							</NavLink>
-						</li>
-					</ul>
-				</aside>
-			)}
-		</>
+		<aside className='Menu'>
+			<h1>Mobile Menu</h1>
+			<ul>
+				<li>
+					<NavLink to='/department' activeClassName={'on'}>
+						Department
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/youtube' activeClassName={'on'}>
+						Youtube
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/gallery' activeClassName={'on'}>
+						Gallery
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/community' activeClassName={'on'}>
+						Community
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/members' activeClassName={'on'}>
+						Members
+					</NavLink>
+				</li>
+				<li>
+					<NavLink to='/contact' activeClassName={'on'}>
+						Contact
+					</NavLink>
+				</li>
+			</ul>
+		</aside>
 	);
 }

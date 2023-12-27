@@ -6,8 +6,8 @@ import { useYoutubeQueryById } from '../../../hooks/useYoutubeQuery';
 
 export default function Detail() {
 	const refTitle = useRef(null);
-
 	const { id } = useParams();
+
 	const { data: YoutubeData, isSuccess } = useYoutubeQueryById(id);
 
 	return (

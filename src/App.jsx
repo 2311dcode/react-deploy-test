@@ -12,7 +12,7 @@ import './globalStyles/Variables.scss';
 import './globalStyles/Reset.scss';
 import { useState } from 'react';
 import { useMedia } from './hooks/useMedia';
-import Menu from './components/common/memu/Menu';
+import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
 import Welcome from './components/sub/members/Welcome';
 

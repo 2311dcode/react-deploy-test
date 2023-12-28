@@ -14,7 +14,7 @@ export default function CookieModal({ wid, ht, children }) {
 	const handleClose = () => {
 		const isChecked = checkEl.current.checked;
 		//함수호출시 체크가되어 있으면 쿠키생성
-		if (isChecked) setCookie('today', 'done', 10);
+		if (isChecked) setCookie('today', 'done', 20);
 		//미체크시 쿠키생성무시하고 그냥 팝업만 닫기
 		setClose(true);
 	};

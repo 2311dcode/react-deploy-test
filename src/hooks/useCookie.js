@@ -1,4 +1,36 @@
+export function useCookie() {
+	const setCookie = (name, value, time) => {
+		let now = new Date();
+		let duedate = now.getTime() + 1000 * time;
+		now.setTime(duedate);
+		document.cookie = `${name}=${value}; path=/; expires=${now.toUTCString()}`;
+		console.log(document.cookie);
+	};
+
+	const isCookie = cookieName => {
+		if (document.cookie.indexOf(cookieName) < 0) return false;
+		else return true;
+	};
+
+	const viewCookie = () => console.log(document.cookie);
+
+	return { setCookie, isCookie, viewCookie };
+}
+
 /* 
+
+export function useCookie(name, value, time) {
+	let now = new Date();
+	let duedate = now.getTime() + 1000 * time; //지금으로부터 time초 뒤의 만료시간
+	now.setTime(duedate);
+	document.cookie = `${name}=${value}; path=/; expires=${now.toUTCString()}`; //한국시로 구한 만료시간값을 전세계 표준시로 변환해서 쿠키값을 만료시간으로 설정
+	//path값 경로의 url에서만 쿠키가 생성됨
+	//csr방식의 리액트에서는 해당 경로로 라우터 이동하더라도 서버쪽에서 해당 URL요청이 들어간 것이 아니기 때문에 쿠키생성이 안됨
+	//해당 URL경로에서 새로고침을 해야지 그때 쿠키가 생성됨
+	//가급적 리액트에서는 쿠키생성 경로 path=/ 로 지정함
+}
+
+
 Cookie 
 :서버에서 https통신으로 client(Browser)에 데이터를 전달할 때 header객체에 전달하는 경량의 문자데이터(4kb: 개별 쿠키값당 )
 :사용자의 브라우저에 물리적인 파일 형태로 저장이 되기 때문에 사용자를 브라우저를 닫더라도 유지시킬수있는 값 
@@ -16,10 +48,3 @@ Cookie vs Local Storage
 Local Storage 는 사용자가 직접 삭제하기 전까지는 계속 유지됨 
 
 */
-
-export function useCookie(name, value, time) {
-	let now = new Date();
-	let duedate = now.getTime() + 1000 * time; //지금으로부터 time초 뒤의 만료시간
-	now.setTime(duedate);
-	document.cookie = `${name}=${value}; expires=${now.toUTCString()}`; //한국시로 구한 만료시간값을 전세계 표준시로 변환해서 쿠키값을 만료시간으로 설정
-}

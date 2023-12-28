@@ -1,11 +1,35 @@
 import './ThemeControl.scss';
+import { useCookie } from '../../../hooks/useCookie';
+import { useRef } from 'react';
 
 export default function ThemeControl() {
+	const inputEl = useRef(null);
+
+	const { setCookie, isCookie } = useCookie();
+
+	if (isCookie('theme')) {
+		document.body.style.setProperty('--pointColor', document.cookie.split('theme=')[1].split(';')[0]);
+	}
+
+	const changeThemeColor = () => {
+		const color = inputEl.current.value;
+		setCookie('theme', color, 20);
+		document.body.style.setProperty('--pointColor', color);
+		console.log(getComputedStyle(document.body).getPropertyValue('--pointColor'));
+
+		return color;
+	};
+
 	return (
-		<div className='ThemeControl'>
-			<input type='color' />
-			<button>theme color</button>
-		</div>
+		<nav className='ThemeControl'>
+			<input
+				type='color'
+				ref={inputEl}
+				onChange={changeThemeColor}
+				defaultValue={isCookie('theme') ? document.cookie.split('theme=')[1].split(';')[0] : 'hotpink'}
+			/>
+			{/* <button onClick={changeThemeColor}>theme color</button> */}
+		</nav>
 	);
 }
 

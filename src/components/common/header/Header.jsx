@@ -52,7 +52,7 @@ export default function Header() {
 				menu
 			</button>
 
-			<ThemeControl></ThemeControl>
+			<ThemeControl />
 		</header>
 	);
 }

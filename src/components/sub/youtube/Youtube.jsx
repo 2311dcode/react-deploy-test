@@ -7,7 +7,7 @@ import { useYoutubeQuery } from '../../../hooks/useYoutubeQuery';
 export default function Youtube() {
 	const customText = useCustomText('combined');
 	const shortenText = useCustomText('shorten');
-	const { data: Vids, isSuccess, isError, error, isLoading } = useYoutubeQuery();
+	const { data: Vids, isSuccess, isError, isLoading } = useYoutubeQuery();
 	// console.log(isError);
 	// console.log(error);
 

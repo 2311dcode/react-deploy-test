@@ -3,7 +3,7 @@ import './Menu.scss';
 import { NavLink } from 'react-router-dom';
 import { useGlobalData } from '../../../hooks/useGlobalData';
 
-export default function Menu({ setToggle }) {
+export default function Menu() {
 	const { MenuOpen, setMenuOpen } = useGlobalData();
 	const closeMenu = useCallback(() => {
 		window.innerWidth >= 1000 && setMenuOpen(false);

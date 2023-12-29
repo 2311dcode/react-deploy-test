@@ -7,6 +7,7 @@
 	.swiper {
 		width: 100%;
 		height: 100%;
+		--swiper-theme-color: var(--pointColor);
 
 		.swiper-wrapper {
 			.swiper-slide {
@@ -137,6 +138,26 @@
 			}
 		}
 
+		.swiper-button-prev {
+			left: -100px;
+			transition: 0.5s;
+			background-image: none;
+		}
+		.swiper-button-next {
+			right: -100px;
+			transition: 0.5s;
+			background-image: none;
+		}
+
+		&:hover {
+			.swiper-button-prev {
+				left: 100px;
+			}
+			.swiper-button-next {
+				right: 100px;
+			}
+		}
+
 		.swiper-pagination {
 			width: 70%;
 			left: 15%;
@@ -148,7 +169,7 @@
 				height: 10px;
 				margin: 0px 5px;
 				border-radius: 5px;
-				background-color: var(--baseColor);
+				// background-color: var(--baseColor);
 				color: var(--bgColor);
 				text-indent: -9999px;
 				cursor: pointer;
@@ -158,7 +179,7 @@
 
 			span.swiper-pagination-bullet-active {
 				width: 60px;
-				background-color: var(--pointColor);
+				// background-color: var(--pointColor);
 			}
 		}
 

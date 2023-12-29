@@ -16,7 +16,7 @@ export function useSplitText() {
 }
 
 export function useCustomText(type) {
-	const toUpperText = (txt) => {
+	const toUpperText = txt => {
 		return txt.charAt(0).toUpperCase() + txt.slice(1);
 	};
 
@@ -34,7 +34,7 @@ export function useCustomText(type) {
 		return (txt, spc = ' ') => {
 			const resultText = txt
 				.split(/-|_|\+/)
-				.map((data) => toUpperText(data))
+				.map(data => toUpperText(data))
 				.join(spc);
 			return resultText;
 		};

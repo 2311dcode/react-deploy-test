@@ -1,19 +1,25 @@
 import './Visual.scss';
 import { useSelector } from 'react-redux';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 export default function Visual() {
 	const { youtube } = useSelector(store => store.youtubeReducer);
-	console.log(youtube);
+	// console.log(youtube);
 	return (
 		<figure className='Visual'>
-			{youtube.map((vid, idx) => {
-				if (idx >= 5) return null;
-				return (
-					<article key={vid.id}>
-						<h3>{vid.snippet.title}</h3>
-					</article>
-				);
-			})}
+			<Swiper>
+				{youtube.map((vid, idx) => {
+					if (idx >= 5) return null;
+					return (
+						<SwiperSlide key={vid.id}>
+							<div className='inner'>
+								<h3>{vid.snippet.title}</h3>
+							</div>
+						</SwiperSlide>
+					);
+				})}
+			</Swiper>
 		</figure>
 	);
 }

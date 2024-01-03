@@ -6,14 +6,16 @@ import { useRef, useState } from 'react';
 
 export default function Visual() {
 	const { isSuccess, data } = useYoutubeQuery();
-	console.log(data);
-
+	const [Index, setIndex] = useState(0);
+	console.log(Index);
 	const swiperOpt = useRef({
 		loop: true,
 		slidesPerView: 1,
-		spaceBetween: 0,
+		spaceBetween: 50,
 		centeredSlides: true,
+
 		onSwiper: swiper => swiper.slideNext(300),
+		onSlideChange: swiper => setIndex(swiper.realIndex),
 		breakpoints: {
 			1000: { slidesPerView: 2 },
 			1400: { slidesPerView: 3 }
@@ -22,7 +24,21 @@ export default function Visual() {
 
 	return (
 		<figure className='Visual'>
-			<div className='txtBox'></div>
+			<div className='txtBox'>
+				<ul>
+					{isSuccess &&
+						data.map((el, idx) => {
+							if (idx >= 5) return null;
+
+							return (
+								<li key={el.id} className={idx === Index ? 'on' : ''}>
+									<span>{Index}</span>
+									<h3>{el.snippet.title}</h3>
+								</li>
+							);
+						})}
+				</ul>
+			</div>
 			<Swiper {...swiperOpt.current}>
 				{isSuccess &&
 					data.map((el, idx) => {

@@ -2,28 +2,67 @@
 	width: 100%;
 	height: calc(100vh - 90px);
 	position: relative;
-}
-.Visual {
-	width: 100%;
-	height: calc(100vh - 90px);
-	position: relative;
 	display: flex;
 	justify-content: flex-end;
 
 	.txtBox {
-		width: 30%;
+		width: 40%;
 		height: 100%;
-		border: 1px solid blue;
+		padding-left: 15vw;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
+
+		ul {
+			width: 100%;
+			height: 100%;
+			position: relative;
+
+			li {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				display: flex;
+				flex-wrap: wrap;
+				align-content: center;
+				font-size: 3rem;
+				opacity: 0;
+				transform: scale(1.5);
+				transition: opacity 1s, transform 1s;
+				overflow: hidden;
+				h3 {
+					font-weight: normal;
+					color: var(--baseColor);
+				}
+				span {
+					position: absolute;
+					font-size: 20rem;
+					left: 0%;
+					top: 0%;
+
+					-webkit-text-stroke: 1px #ccc;
+					color: transparent;
+					z-index: -1;
+				}
+			}
+			li.on {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
 	}
 
 	.swiper {
 		display: inline-block;
-		width: 70%;
+		width: 80%;
 		height: 100%;
-		padding: 10vw 0;
-
-		margin-left: auto;
-		background: orange;
+		padding: 10vw 0px;
+		position: absolute;
+		left: 0;
+		top: 0;
 
 		.swiper-wrapper {
 			height: inherit;
@@ -31,11 +70,14 @@
 			.swiper-slide {
 				width: 100%;
 				height: inherit;
-
 				.pic {
 					width: 100%;
 					height: 100%;
 					position: relative;
+					opacity: 0.4;
+					transform: scale(0.5);
+					position: relative;
+					transition: opacity 0.5s, transform 0.5s;
 
 					> p {
 						position: absolute;
@@ -45,6 +87,12 @@
 						left: 0;
 						overflow: hidden;
 
+						&:nth-of-type(1) {
+							filter: blur(20px) saturate(1.2);
+							transform: translate(30px, 30px);
+							opacity: 0.7;
+						}
+
 						img {
 							width: 100%;
 							height: 100%;
@@ -52,6 +100,28 @@
 							transform: scale(1.5);
 						}
 					}
+				}
+			}
+
+			//prev-style
+			.swiper-slide-prev {
+				.pic {
+					transform: scale(1.5);
+					opacity: 0;
+				}
+			}
+			//active-style
+			.swiper-slide-active {
+				.pic {
+					transform: scale(1);
+					opacity: 1;
+				}
+			}
+			//active-style
+			.swiper-slide-next {
+				.pic {
+					transform: scale(0.7);
+					opacity: 0.7;
 				}
 			}
 		}

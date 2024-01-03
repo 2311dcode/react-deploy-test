@@ -86,3 +86,16 @@ Swiper안쪽에서 또다른 컴포넌트를 연결해주고 그 안쪽에서 us
 해당 자식 컴포넌트 안쪽에서 생성된 객체로부터 swiper core에 등록되어있는 모든 메서드, 프로퍼티를 리액트에서도 사용가능 
 
 */
+
+/* 
+중요 정리 내용 
+1. swiper 컴포넌트의 기본 사용법 
+
+2. useSwiper라는 정용 hook을 이용해서  swiper인스턴스를 생성하기 위해서는 Swiper안쪽에 자식컴포넌트 호출 뒤 해당 컴포넌트에 인스턴스 복사 
+3. 부모컴포넌트에서 자식 컴포넌트에서 생성된 인스턴스 객체를 활용하기 위해서 빈참조객체를 자식 컴포넌트에 전달해서 역으로 인스턴스를 자식 컴포넌트로부터 전달 
+4. Swiper 컴포넌트 안쪽에 지저분한 props들은 컴포넌트 외부에 객체로 만들어서 전개연산자로 연결 가능 
+
+//JSX를 커스텀해서 만드는 리액트 전용메서드
+//React.createElement('태그명', {...props}, children)
+//Reaact.createElement('p',{className:'abc'},'text') --> <p className='abc'>text</p>
+*/

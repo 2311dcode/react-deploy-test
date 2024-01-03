@@ -3,18 +3,21 @@
 	padding: 30px 5px;
 	border-bottom: 1px solid rgba(var(--baseColor-code), 0.4);
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 	margin: 0 auto;
+	flex-basis: 60px;
 
 	h1 {
 		font-size: var(--titSize2);
 	}
 
 	ul {
+		margin-left: auto;
 		display: flex;
-		gap: 50px;
+		justify-content: space-around;
 		align-items: center;
+		gap: 30px;
 
 		a.on {
 			color: var(--pointColor);

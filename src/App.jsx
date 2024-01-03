@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { useMedia } from './hooks/useMedia';
 import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
-// import Welcome from './components/sub/members/Welcome';
+import Welcome from './components/sub/members/Welcome';
 import * as types from './redux/actionType';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,10 +23,11 @@ export default function App() {
 	const Dark = useSelector(store => store.darkReducer.dark);
 
 	useEffect(() => {
-		dispatch({ type: types.MEMBERS.start });
-		dispatch({ type: types.HISTORY.start });
-		dispatch({ type: types.YOUTUBE.start });
-		dispatch({ type: types.FLICKR.start, opt: { type: 'user', id: '187597869@N08' } });
+		// dispatch({ type: types.MEMBERS.start });
+		// dispatch({ type: types.HISTORY.start });
+		// dispatch({ type: types.YOUTUBE.start });
+		// dispatch({ type: types.FLICKR.start });
+		['MEMBERS', 'HISTORY', 'YOUTUBE', 'FLICKR'].forEach(typeName => dispatch({ type: types[typeName].start }));
 	}, [dispatch]);
 
 	return (
@@ -40,7 +41,7 @@ export default function App() {
 			<Route path='/contact' component={Contact} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/detail/:id' component={Detail} />
-			{/* <Route path='/welcome/:id' component={Welcome} /> */}
+			<Route path='/welcome/:id' component={Welcome} />
 			<Footer />
 			<Menu />
 		</div>

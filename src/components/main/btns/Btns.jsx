@@ -1,6 +1,6 @@
+import Anime from '../../../asset/anime';
 import './Btns.scss';
 import { useRef, useState, useEffect } from 'react';
-import Anime from '../../../asset/anime';
 
 export default function Btns() {
 	const [Index, setIndex] = useState(0);
@@ -26,7 +26,6 @@ export default function Btns() {
 		setNum(secs.current.length);
 
 		wrap.current.addEventListener('scroll', activation);
-
 		return () => wrap.current.removeEventListener('scroll', activation);
 	}, []);
 
@@ -40,7 +39,17 @@ export default function Btns() {
 							key={idx}
 							className={idx === Index ? 'on' : ''}
 							onClick={() => {
-								new Anime(wrap.current, { scroll: secs.current[idx].offsetTop }, { duration: 500 });
+								//new Anime(선택자, {속성명1:속성값2, 속성명2:속성값2}, {duration:속도, easeType:가속도, callback:컴플릭함수})
+								new Anime(
+									wrap.current,
+									{ scroll: secs.current[idx].offsetTop },
+									{
+										ease: [0.43, -1.06, 0.69, 1.72],
+										callback: () => {
+											console.log('complete');
+										}
+									}
+								);
 							}}></li>
 					);
 				})}

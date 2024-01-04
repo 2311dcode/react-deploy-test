@@ -1,5 +1,5 @@
 import './Pics.scss';
 
 export default function Pics() {
-	return <div className='Pics myScroll'>Pics</div>;
+	return <section className='Pics myScroll'>Pics</section>;
 }

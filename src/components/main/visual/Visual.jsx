@@ -6,13 +6,10 @@ import 'swiper/css';
 import { useRef, useState } from 'react';
 
 export default function Visual() {
-	const num = useRef(5);
+	const num = useRef(8);
 	const swipeRef = useRef(null);
 	const { isSuccess, data } = useYoutubeQuery();
 
-	//loop값이 true시 초기 Index값을 0,1을 주면 안됨
-	//onSwipe 이벤트 발생시 자동적으로 realIndex값이 기존 Index값에 1을 뺀값으로 적용되므로
-	//useEffect에 의해서 prevIndex값이 0혹은 마지막 순번으로 변경되므로 기존 realIndex값과 중첩되서 버그발생
 	const [PrevIndex, setPrevIndex] = useState(1);
 	const [Index, setIndex] = useState(2);
 	const [NextIndex, setNextIndex] = useState(3);
@@ -45,12 +42,18 @@ export default function Visual() {
 	};
 
 	return (
-		<figure className='Visual myScroll'>
+		<figure className='Visual'>
+			<div className='barFrame'>
+				<p className='bar' style={{ width: (100 / num.current) * (Index + 1) + '%' }}></p>
+			</div>
+			<div className='counter'>
+				<strong>0{Index + 1}</strong>/<span>0{num.current}</span>
+			</div>
 			<div className='txtBox'>
 				<ul>
 					{isSuccess &&
 						data.map((el, idx) => {
-							if (idx >= 5) return null;
+							if (idx >= num.current) return null;
 
 							return (
 								<li key={el.id} className={idx === Index ? 'on' : ''}>

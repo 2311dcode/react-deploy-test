@@ -4,6 +4,36 @@
 	position: relative;
 	overflow: hidden;
 
+	.barFrame {
+		width: 70%;
+		height: 2px;
+		position: absolute;
+		bottom: 50px;
+		left: 15%;
+		background: #888;
+
+		.bar {
+			width: 0%;
+			height: 100%;
+			background: var(--pointColor);
+			position: absolute;
+			top: 0;
+			left: 0;
+			transition: width 0.5s;
+		}
+	}
+	.counter {
+		position: absolute;
+		bottom: 80px;
+		right: 15vw;
+		color: var(--baseColor);
+		font-size: 1.5rem;
+
+		strong {
+			font-size: 2.5rem;
+		}
+	}
+
 	.txtBox {
 		width: 40%;
 		height: 100%;
@@ -149,12 +179,11 @@
 		justify-content: center;
 		align-content: center;
 		gap: 60px;
-		overflow: hidden;
 
 		.txtBox {
 			width: 100%;
-			height: 40%;
-			padding-left: 0vw;
+			height: 30%;
+			padding-left: 0;
 			padding: 5vh 10vw;
 			position: relative;
 			top: 100px;
@@ -173,52 +202,6 @@
 				.swiper-slide {
 					height: 100%;
 				}
-				//prev-style
-				.swiper-slide-prev {
-					.pic {
-						transform: scale(1.5);
-						opacity: 0;
-					}
-				}
-				//active-style
-				.swiper-slide-active {
-					.pic {
-						transform: scale(1);
-						opacity: 1;
-					}
-				}
-				//active-style
-				.swiper-slide-next {
-					.pic {
-						transform: scale(0.7);
-						opacity: 0.5;
-					}
-				}
-			}
-		}
-
-		//preview thumbnails
-		.preview {
-			p {
-				width: 120px;
-				height: 60px;
-				overflow: hidden;
-				position: absolute;
-				bottom: 5vh;
-				cursor: pointer;
-				z-index: 6;
-
-				img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-				}
-			}
-			p.prevBox {
-				left: 50px;
-			}
-			p.nextBox {
-				right: 50px;
 			}
 		}
 	}

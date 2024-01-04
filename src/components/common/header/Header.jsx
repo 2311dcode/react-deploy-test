@@ -3,7 +3,7 @@ import ThemeControl from '../themeControl/ThemeControl';
 import './Header.scss';
 import DarkMode from '../darkMode/DarkMode';
 import { NavLink, Link } from 'react-router-dom';
-
+import { SlMenu } from 'react-icons/sl';
 export default function Header() {
 	const { MenuOpen, setMenuOpen } = useGlobalData();
 	return (
@@ -46,7 +46,7 @@ export default function Header() {
 			</ul>
 
 			<button className='menuToggle' onClick={() => setMenuOpen(!MenuOpen)}>
-				menu
+				<SlMenu />
 			</button>
 
 			<DarkMode />

@@ -6,8 +6,7 @@
 	justify-content: flex-start;
 	align-items: center;
 	margin: 0 auto;
-	flex-basis: 60px;
-
+	gap: 10px;
 	h1 {
 		font-size: var(--titSize2);
 	}
@@ -29,8 +28,11 @@
 		margin-left: auto;
 		display: none;
 		border: none;
-
+		background: transparent;
 		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		color: var(--pointColor);
 	}
 }
 

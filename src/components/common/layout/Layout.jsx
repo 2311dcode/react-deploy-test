@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './Layout.scss';
 import { useSplitText } from '../../../hooks/useText';
 import { useScroll } from '../../../hooks/useScroll';
@@ -23,9 +23,6 @@ export default function Layout({ children, title }) {
 			<h1 ref={refTitle}>{title}</h1>
 			<div className='bar'></div>
 			{children}
-			<button className='btnTop' onClick={() => scrollTo(0)}>
-				Top
-			</button>
 		</main>
 	);
 }

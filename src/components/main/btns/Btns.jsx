@@ -20,19 +20,21 @@ export default function Btns(opt) {
 	//아래함수는 scroll이 동작될때마다 실행되는 함수
 	const activation = () => {
 		if (!Mounted) return;
-		const scroll = wrap.current.scrollTop;
+		const scroll = wrap.current?.scrollTop;
 
 		//내부적으로 scroll시 모든 section요소와, btns요소를 탐색해서 가져와야 됨
 		//스크롤하자마 바로 라우터 이동을 하면 모든 section요소를 참조객체에 담기기전에
 		//컴포넌트가 언마운트 됨
 		//컴포넌트 언마운트시 비어있는 참조객체를 호출하려고 하기 때문에 에러 발생
 		//컴포넌트가 언마운트되면 return문으로 참조객체활용 구문자체를 무시
-		secs.current.forEach((_, idx) => {
-			if (scroll >= secs.current[idx].offsetTop + baseLine.current) {
-				Array.from(btns.current.children).forEach(btn => btn.classList.remove('on'));
-				btns.current.children[idx].classList.add('on');
-			}
-		});
+		if (secs.current) {
+			secs.current.forEach((_, idx) => {
+				if (scroll >= secs.current[idx].offsetTop + baseLine.current) {
+					Array.from(btns.current.children).forEach(btn => btn?.classList.remove('on'));
+					btns.current.children[idx].classList.add('on');
+				}
+			});
+		}
 	};
 
 	const moveScroll = idx => {
@@ -66,22 +68,27 @@ export default function Btns(opt) {
 	const throttledActivation = useThrottle(activation);
 	const throttledModifyPos = useThrottle(modifyPos, 200);
 
+	//컴포넌트가 언마운트 한번만 동작되야 되기 때문에
+	//의존성배열이 비어있는 useEffect훅안쪽의 클린업함수에서 Mounted값 변경
+	useEffect(() => {
+		return () => setMounted(false);
+	}, []);
+
 	useEffect(() => {
 		wrap.current = document.querySelector(resultOpt.current.frame);
 		secs.current = wrap.current.querySelectorAll(resultOpt.current.items);
 		setNum(secs.current.length);
 
 		window.addEventListener('resize', throttledModifyPos);
-		wrap.current.addEventListener('scroll', throttledActivation);
+		Mounted && wrap.current.addEventListener('scroll', throttledActivation);
 		isAutoScroll.current && wrap.current.addEventListener('mousewheel', autoScroll);
 
 		return () => {
-			setMounted(false);
 			window.removeEventListener('resize', throttledModifyPos);
 			wrap.current.removeEventListener('scroll', throttledActivation);
 			wrap.current.removeEventListener('mousewheel', autoScroll);
 		};
-	}, [autoScroll, throttledActivation, throttledModifyPos, resultOpt.current.frame, resultOpt.current.items]);
+	}, [autoScroll, throttledActivation, throttledModifyPos, resultOpt.current.frame, resultOpt.current.items, Mounted]);
 
 	return (
 		<ul className='Btns' ref={btns}>

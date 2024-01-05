@@ -6,8 +6,13 @@ import { useScroll } from '../../../hooks/useScroll';
 export default function Layout({ children, title }) {
 	const refFrame = useRef(null);
 	const refTitle = useRef(null);
+	const refBtnTop = useRef(null);
 	const splitText = useSplitText();
-	const { scrollTo } = useScroll();
+	const { scrollTo, getCurrentScroll, scrollFrame } = useScroll();
+
+	const handleScroll = num => {
+		getCurrentScroll()>= num ? refBtnTop.current.classList.add('on') : 
+	};
 
 	useEffect(() => {
 		scrollTo(0);
@@ -15,7 +20,11 @@ export default function Layout({ children, title }) {
 		setTimeout(() => {
 			refFrame.current?.classList.add('on');
 		}, 300);
-	}, [splitText, title, scrollTo]);
+
+		scrollFrame.current.addEventListener('scroll', () => {
+			console.log(getCurrentScroll());
+		});
+	}, [splitText, title, scrollTo, scrollFrame, getCurrentScroll]);
 
 	return (
 		<main ref={refFrame} className={`Layout ${title}`}>

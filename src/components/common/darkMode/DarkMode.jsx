@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useCookie } from '../../../hooks/useCookie';
 import { useGlobalData } from '../../../hooks/useGlobalData';
 import './DarkMode.scss';
+import { MdDarkMode } from 'react-icons/md';
+import { CiLight } from 'react-icons/ci';
 
 export default function DarkMode() {
 	const { setCookie, isCookie } = useCookie();
@@ -18,7 +20,8 @@ export default function DarkMode() {
 
 	return (
 		<div className={`DarkMode ${Mode === 'light' ? 'light' : 'dark'}`} onClick={changeMode}>
-			<div className='ball'></div>
+			{/* <div className='ball'></div> */}
+			{Mode === 'light' ? <MdDarkMode /> : <CiLight />}
 		</div>
 	);
 }

@@ -28,9 +28,36 @@
 		margin-bottom: 150px;
 	}
 
+	.btnTop {
+		cursor: pointer;
+		width: 50px;
+		height: 50px;
+		background: var(--baseColor);
+		color: var(--bgColor);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: none;
+		position: fixed;
+		bottom: 50px;
+		right: 50px;
+		z-index: 6;
+		opacity: 0;
+		transform: scale(1.4);
+		transition: opacity 0.5s, transform 0.5s, background-color 0.5s;
+
+		&.on {
+			opacity: 1;
+			transform: scale(1);
+		}
+		&:hover {
+			background-color: var(--pointColor);
+		}
+	}
+
 	&.on {
 		opacity: 1;
-		top: 0;
+		top: 0px;
 
 		h1 {
 			span {
@@ -40,21 +67,7 @@
 		}
 	}
 }
-.btnTop {
-	cursor: pointer;
-	width: 50px;
-	height: 50px;
-	background: var(--baseColor);
-	color: var(--bgColor);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: none;
-	position: fixed;
-	bottom: 50px;
-	right: 50px;
-	z-index: 6;
-}
+
 .tablet {
 	.Layout {
 		width: 80vw;

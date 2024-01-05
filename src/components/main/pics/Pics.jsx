@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useScroll } from '../../../hooks/useScroll';
 import './Pics.scss';
 
@@ -6,7 +7,7 @@ export default function Pics() {
 
 	useEffect(() => {
 		scrollFrame?.addEventListener('scroll', () => {
-			console.log(getCurrentScroll);
+			console.log(getCurrentScroll());
 		});
 	}, [scrollFrame, getCurrentScroll]);
 	return (

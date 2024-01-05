@@ -20,8 +20,10 @@ export default function Visual() {
 		slidesPerView: 1,
 		spaceBetween: 50,
 		centeredSlides: true,
-		loopedSlides: num.current, //loop모드일때 슬라이드갯수지정하면 초기순번 어그러지는 문제 해결
-		onSwiper: swiper => (swipeRef.current = swiper),
+		loopedSlides: num.current,
+		onSwiper: swiper => {
+			swipeRef.current = swiper;
+		},
 		onSlideChange: swiper => {
 			setIndex(swiper.realIndex);
 			swiper.realIndex === 0 ? setPrevIndex(num.current - 1) : setPrevIndex(swiper.realIndex - 1);
@@ -44,12 +46,6 @@ export default function Visual() {
 
 	return (
 		<figure className='Visual'>
-			<div className='barFrame'>
-				<p className='bar' style={{ width: (100 / num.current) * (Index + 1) + '%' }}></p>
-			</div>
-			<div className='counter'>
-				<strong>0{Index + 1}</strong>/<span>0{num.current}</span>
-			</div>
 			<div className='txtBox'>
 				<ul>
 					{isSuccess &&
@@ -96,6 +92,22 @@ export default function Visual() {
 					</>
 				)}
 			</nav>
+
+			<ul className='pagination'>
+				{Array(num.current)
+					.fill()
+					.map((_, idx) => {
+						return <li key={idx} className={idx === Index ? 'on' : ''} onClick={() => swipeRef.current.slideToLoop(idx, 400)}></li>;
+					})}
+			</ul>
+
+			<div className='barFrame'>
+				<p className='bar' style={{ width: (100 / num.current) * (Index + 1) + '%' }}></p>
+			</div>
+
+			<div className='counter'>
+				<strong>0{Index + 1}</strong>/<span>0{num.current}</span>
+			</div>
 		</figure>
 	);
 }

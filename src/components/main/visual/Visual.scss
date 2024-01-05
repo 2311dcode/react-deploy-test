@@ -145,6 +145,24 @@
 		}
 	}
 
+	.pagination {
+		position: absolute;
+		bottom: 100px;
+		left: 15%;
+		display: flex;
+		gap: 10px;
+		z-index: 7;
+		li {
+			width: 10px;
+			height: 10px;
+			background: #888;
+			cursor: pointer;
+
+			&.on {
+				background: var(--pointColor);
+			}
+		}
+	}
 	//preview thumbnails
 	.preview {
 		p {

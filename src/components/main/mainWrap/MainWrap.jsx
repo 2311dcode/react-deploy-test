@@ -1,18 +1,24 @@
+import Info from '../info/Info';
+import Visual from '../visual/Visual';
+import Pics from '../pics/Pics';
 import Banner from '../banner/Banner';
+import './MainWrap.scss';
 import Btns from '../btns/Btns';
 import Illust from '../illust/Illust';
-import Info from '../info/Info';
-import Pics from '../pics/Pics';
-import Visual from '../visual/Visual';
-import './MainWrap.scss';
+import { useScroll } from '../../../hooks/useScroll';
+import { useEffect } from 'react';
 
 export default function MainWrap() {
+	const { scrollTo } = useScroll();
+
+	useEffect(() => {
+		scrollTo(0);
+	}, [scrollTo]);
 	return (
 		<div className='MainWrap'>
 			<Visual />
 			<Info />
 			<Pics />
-			{/* <Btns frame={스크롤제어할 프레임요소 클래스명} items={스크롤이 걸릴 영역 공통클래스} base={활성화기준점} isAuto={autoScrolling유무(boolean : default-false)} /> */}
 			<Illust />
 			<Banner />
 			<Btns />

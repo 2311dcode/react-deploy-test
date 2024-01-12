@@ -4,8 +4,12 @@ import './Department.scss';
 import { useCustomText } from '../../../hooks/useText';
 import { useHistoryQuery } from '../../../hooks/useHistoryQuery';
 import { useDepartmentQuery } from '../../../hooks/useDepartmentQuery';
+import { useHistory } from 'react-router-dom';
 
 export default function Department() {
+	const history = useHistory();
+	console.log(history);
+
 	const path = useRef(process.env.PUBLIC_URL);
 	const combinedTitle = useCustomText('combined');
 
@@ -34,7 +38,7 @@ export default function Department() {
 			</section>
 
 			<section className='memberBox'>
-				<h2>{combinedTitle('Members')}</h2>
+				<h2 onClick={() => history.push('/')}>{combinedTitle('Members')}</h2>
 
 				<div className='con'>
 					{isMember &&

@@ -31,6 +31,14 @@ ReactDOM.render(
 	selector : 컴포넌트에서 전역 store의 데이터 요청할때는 무조건 selector를 통해서만 호출 가능
 */
 /*
+redux 작업흐름
+	1. redux폴더 안쪽에 store생성하는 함수, 리듀서함수, actionType문자열 저장객체를 준비
+	2. index.js에서 redux폴더 안쪽에서 생성한 store객체를 Provider컴포넌트를 통해서 App에 전달 (모든 컴포넌트는 store에 useSelector훅으로 접근 가능)
+	3. 루트컴포넌트인 App이 마운트되자마자 비동기데이터를 fetching후 action객체에 액션타입과같이 담아주고 dispatch로 리듀서함수에 전달
+	4. 리듀서함수가 컴포넌트로부터 전달된 action객체의 타입을 확인해서 같이 전달된 payload값으로 store에 데이터를 변경처리
+	5. 단 클라이언트데이터는 애초에 리듀서함수에서 초기값설정에서 store 저장
+
+
 	해당 리덕스를 사용한 이유
 	- 서브 컴포넌트에서 활용하는 회사정보, 연혁정보, 유튜브, 플리커같은 정보값을 메인컴포넌트에 미리 보기 형식을 출력
 	- 같은 데이터를 활용하는데 다시 re-fetching은 비효율적, props으로 전달하기에는 컴포넌트가 지저분해져서 전역데이터 관리에 관심 생김

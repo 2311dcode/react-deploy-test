@@ -50,3 +50,16 @@ export default function Department() {
 		</Layout>
 	);
 }
+
+/*
+	Department.jsx 작업흐름
+	- public/DB폴더안쪽에 json파일을 미리 준비해서 data fetching 처리
+	- 데이터를 기반으로 회사 연혁및 멤버소개 페이지 구현
+
+	이슈사항
+	- 상대적으로 리액트 지식이 적을때 처음 제작한 컴포넌트라 static한 데이터를 일일 JSX에 컨텐츠를 담아서 구현
+
+	- 추후 데이터 관리가 비효율적인것 같아서 JSON파일형태로 데이터만 분리한다음에 동적으로 렌더링 처리
+	- 이때까진 아직 DB를 공부하기 전이라 아쉬운대로 JSON처리 
+	- (Next.js로 Mongo DB 연동프로젝트는 p.100에서 확인가능)
+*/

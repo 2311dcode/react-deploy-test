@@ -23,7 +23,6 @@ export default function ThemeControl() {
 		setCookie('theme', color, 60 * 60 * 24);
 		inputEl.current.value = color;
 	};
-
 	const throttledChangeTheme = useThrottle(changeThemeColor, 300);
 
 	useEffect(() => {

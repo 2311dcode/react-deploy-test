@@ -15,12 +15,15 @@ export default function Layout({ children, title }) {
 	const { scrollTo, refEl } = useScroll(handleCustomScroll, 0);
 
 	useEffect(() => {
-		scrollTo(0);
 		splitText(refTitle.current, title, 0.7, 0.1);
 		setTimeout(() => {
 			refEl.current?.classList.add('on');
 		}, 300);
-	}, [splitText, title, scrollTo, refEl]);
+	}, [splitText, title, refEl]);
+
+	useEffect(() => {
+		scrollTo(0);
+	}, [scrollTo]);
 
 	return (
 		<main ref={refEl} className={`Layout ${title}`}>
